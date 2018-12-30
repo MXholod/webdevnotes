@@ -14,6 +14,16 @@
 /*Route::get('/', function () {
     return view('welcome');
 });*/
+/*Routes for Administrative zone*/
+Route::group([
+    'prefix'=>'admin', //Part in URI
+    'namespace'=>'Admin',//As folder name 'Admin' where Controllers lay
+    'middleware'=>['auth']],//From file Kernel, it allows don't write in Controllers
+    function(){
+        Route::get('/','WDashboardController@wdashboard')->name('admin.index');
+    }
+);
+
 Route::view('/', 'welcome');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
