@@ -16,7 +16,8 @@
         "imagemin": "^6.1.0",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.5",
-        "popper.js": "^1.12"
+        "popper.js": "^1.12",
+        "vue-template-compiler": "^2.5.22"
     },
     "dependencies": {
         "bootstrap": "^4.2.1",
