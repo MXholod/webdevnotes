@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/admin/app_admin.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -19,5 +19,5 @@
     <!-- Favicon favicon.ico -->
     <!--<link rel="shortcut icon" type="image/x-icon" sizes="16x16" href="{{ asset('/admin/images/favicon.ico') }}">-->
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin/app_admin.css') }}" rel="stylesheet">
 </head>
