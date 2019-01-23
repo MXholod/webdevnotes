@@ -63,6 +63,11 @@
                 margin-bottom: 30px;
             }
         </style>
+    <!-- Favicons -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicons/favicon.ico') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicons/favicon180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicons/favicon32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicons/favicon16x16.png') }}">  
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -80,7 +85,6 @@
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
-                </div>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
