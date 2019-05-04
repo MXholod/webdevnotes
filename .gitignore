@@ -6,6 +6,7 @@
 /public/js
 /public/images
 /storage/*.key
+/storage/debugbar
 /vendor
 /.idea
 /.vscode
