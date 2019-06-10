@@ -2,5 +2,12 @@
 @import '../variables';
 /*Bootstrap*/
 @import '~bootstrap/scss/bootstrap';
+//Fonts
+@import './fonts';
+//Font Awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/brands';
 //Mediaqueries
-@import '../mediaqueries';
+@import './admin_mediaqueries';
