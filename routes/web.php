@@ -21,6 +21,7 @@ Route::group([
     'middleware'=>['auth']],//From file Kernel, it allows don't write in Controllers
     function(){
         Route::get('/','WDashboardController@wdashboard')->name('admin.index');
+        Route::resource('/category','WDCategoryController',['as'=>'admin']);
     }
 );
 

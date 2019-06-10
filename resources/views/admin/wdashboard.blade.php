@@ -1,5 +1,7 @@
 @extends('admin.layouts.admin_app')
 @section('content')
-    <h1>Admin test</h1>
+    <div class="wd-admin-content ">
+        <p>Content</p>
+    </div>
 @endsection
 
