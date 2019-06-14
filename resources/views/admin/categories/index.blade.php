@@ -20,6 +20,7 @@
                 <table class="table table-striped">
                     <thead>
                         <th>Наименование</th>
+                        <th>Описание категории</th>
                         <th>Публикация</th>
                         <th class="text-right">Действие</th>
                     </thead>
@@ -27,6 +28,7 @@
                         @forelse($categories as $category)
                             <tr>
                                 <td>{{ $category->title }}</td>
+                                <td>{{ $category->description ?? "Описание отсутствует" }}</td>
                                 <td>{{ $category->published }}</td>
                                 <td>
                                     <a href="{{route('admin.category.edit',['id' => $category->id])}}">
@@ -37,7 +39,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">
+                                <td colspan="4" class="text-center">
                                     <h2>Категории отсутствуют</h2>
                                 </td>
                             </tr>
@@ -45,7 +47,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3" class="text-center">
+                            <td colspan="4" class="text-center">
                                 <ul class="pagination pull-right">
                                     <li>{{$categories->links()}}</li>
                                 </ul>

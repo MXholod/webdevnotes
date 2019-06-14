@@ -33,6 +33,11 @@ class WDCategoryController extends Controller
     public function create()
     {
         //Отвечает за открытие формы создания Категории
+        return view('admin.categories.create',[
+            'category' => [],
+            'categories' => BlogwdCategory::with('children')->where('parent_id','0')->get(),
+            'delimiter' => ''
+        ]);
     }
 
     /**
@@ -44,6 +49,9 @@ class WDCategoryController extends Controller
     public function store(Request $request)
     {
         //Отвечает за создание записи в таблице
+        //Method create() is for bulk filling
+        BlogwdCategory::create($request->all());
+        return redirect()->route('admin.category.index');
     }
 
     /**
