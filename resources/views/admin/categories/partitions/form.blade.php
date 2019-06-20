@@ -18,7 +18,7 @@
     value="{{$category->title ?? ''}}" required />
 <label for="descriptionCat">Описание категории</label>
 <textarea cols="20" rows="2" id="descriptionCat" name="description" style="width:100%">
-    
+    {{$category->description ?? ''}}
 </textarea>
 
 <label for="slug">Slug</label>

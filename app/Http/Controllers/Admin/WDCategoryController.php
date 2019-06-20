@@ -71,9 +71,15 @@ class WDCategoryController extends Controller
      * @param  \Webdev\Models\BlogwdCategory  $blogwdCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(BlogwdCategory $blogwdCategory)
+    public function edit($id)
     {
+        $category = BlogwdCategory::find($id);
         //Отвечает за открытие формы обновления
+        return view('admin.categories.edit',[
+            'category' => $category,
+            'categories' => BlogwdCategory::with('children')->where('parent_id','0')->get(),
+            'delimiter' => ''
+        ]);
     }
 
     /**
@@ -83,9 +89,18 @@ class WDCategoryController extends Controller
      * @param  \Webdev\Models\BlogwdCategory  $blogwdCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BlogwdCategory $blogwdCategory)
+    public function update(Request $request, $id)
     {
-        //Отвечает за обновление в таблице
+        $request->validate([
+            'title' => 'required',
+        ]);
+        $category = BlogwdCategory::find($id);
+            $category->published = $request->get('published');
+            $category->title = $request->get('title');
+            $category->description = $request->get('description');
+            $category->parent_id = $request->get('parent_id');
+        $category->save();
+        return redirect()->route('admin.category.index');
     }
 
     /**
