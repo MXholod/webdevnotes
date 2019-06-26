@@ -109,8 +109,11 @@ class WDCategoryController extends Controller
      * @param  \Webdev\Models\BlogwdCategory  $blogwdCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BlogwdCategory $blogwdCategory)
+    public function destroy($id)
     {
         //Отвечает за удаление
+        $category = BlogwdCategory::findOrFail($id);
+        $category->delete();
+        return redirect()->route('admin.category.index');
     }
 }

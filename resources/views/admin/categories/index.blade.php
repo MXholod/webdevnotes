@@ -31,6 +31,21 @@
                                 <td>{{ $category->description ?? "Описание отсутствует" }}</td>
                                 <td>{{ $category->published }}</td>
                                 <td>
+                                    <form style="display:inline-block;"
+                                        onsubmit="if(confirm('Want to delete?')){
+                                            return true;
+                                        }else{
+                                            return false;
+                                        }"
+                                        action="{{route('admin.category.destroy',$category)}}"
+                                        method="POST"
+                                    >
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn" />
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
                                     <a href="{{route('admin.category.edit', $category)}}">
                                         <i class="fa fa-edit"></i>
                                         {{ $category->published }}
