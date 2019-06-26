@@ -22,6 +22,7 @@ Route::group([
     function(){
         Route::get('/','WDashboardController@wdashboard')->name('admin.index');
         Route::resource('/category','WDCategoryController',['as'=>'admin']);
+        Route::resource('/post','WDPostController',['as'=>'admin']);
     }
 );
 

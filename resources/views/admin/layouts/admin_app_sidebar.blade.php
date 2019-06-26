@@ -8,7 +8,7 @@
               <a class="nav-link active" href="{{route('admin.category.index')}}">Категории</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Материалы</a>
+              <a class="nav-link" href="{{route('admin.post.index')}}">Материалы</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
