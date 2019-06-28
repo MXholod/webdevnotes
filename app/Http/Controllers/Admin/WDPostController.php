@@ -3,6 +3,7 @@
 namespace Webdev\Http\Controllers\Admin;
 
 use Webdev\Models\BlogwdPost;
+use Webdev\Models\BlogwdCategory;
 use Illuminate\Http\Request;
 use Webdev\Http\Controllers\Controller;
 
@@ -29,6 +30,11 @@ class WDPostController extends Controller
     public function create()
     {
         //
+        return view('admin.posts.create',[
+            'post'=> [],
+            'categories'=> BlogwdCategory::with('children')->where('parent_id',0)->get(),
+            'delimiter'=> ''
+        ]);
     }
 
     /**
@@ -40,6 +46,12 @@ class WDPostController extends Controller
     public function store(Request $request)
     {
         //
+        $post = BlogwdPost::create($request->all());
+        //Categories
+        if($request->input('categories')){
+            $post->categories()->attach($request->input('categories'));
+        }
+        return redirect()->route('admin.post.index');
     }
 
     /**
