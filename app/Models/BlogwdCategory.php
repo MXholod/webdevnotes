@@ -26,4 +26,15 @@ class BlogwdCategory extends Model
         */
        return $this->hasMany(self::class,'parent_id'); 
     }
+    /**
+     * It is needed to define inverse relation polymorphic relationship many to many.
+     */
+     //Polymorphic relation with Posts
+    public function posts(){
+        return $this->morphedByMany('Webdev\Models\BlogwdPost','blogwd_categoryable');//categoryable
+    }
+    
+    public function scopeLastCategories($query, $count){
+        return $query->orderBy('created_at','desc')->take($count)->get();
+    }
 }
