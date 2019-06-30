@@ -49,6 +49,7 @@ class WDPostController extends Controller
         $post = BlogwdPost::create($request->all());
         //Categories
         if($request->input('categories')){
+            //Attach fields in database 'blogwd_categoryables'
             $post->categories()->attach($request->input('categories'));
         }
         return redirect()->route('admin.post.index');
@@ -96,15 +97,17 @@ class WDPostController extends Controller
             'title' => 'required',
             'meta_title' => 'required',
             'meta_keywords' => 'required',
-            'meta_description' => 'required'
+            'meta_description' => 'required',
+            'description' => 'required',
         ]);
         $post = BlogwdPost::find($id);
             $post->modified_by = $request->get('modified_by');
             $post->published = $request->get('published');
             $post->title = $request->get('title');
-            //Categories
+            //Detach fields in database 'blogwd_categoryables'
             $post->categories()->detach();
             if($request->get('categories')){
+                //Attach fields in database 'blogwd_categoryables' again
                 $post->categories()->attach($request->get('categories'));
             }
             $post->meta_title = $request->get('meta_title');
@@ -122,8 +125,13 @@ class WDPostController extends Controller
      * @param  \Webdev\Models\BlogwdPost  $blogwdPost
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BlogwdPost $blogwdPost)
+    public function destroy($id)
     {
-        //
+        $post = BlogwdPost::findOrFail($id);
+        //Detach fields in database 'blogwd_categoryables'
+        $post->categories()->detach();
+        //Delete current Post
+        $post->delete();
+        return redirect()->route('admin.post.index');
     }
 }
