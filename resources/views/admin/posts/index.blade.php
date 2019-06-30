@@ -28,7 +28,7 @@
                         @forelse($posts as $post)
                             <tr>
                                 <td>{{ $post->title }}</td>
-                                <td>{{ $post->description ?? "Описание отсутствует" }}</td>
+                                <td>{!! $post->description ?? "Описание отсутствует" !!}</td>
                                 <td>{{ $post->published }}</td>
                                 <td>
                                     <form style="display:inline-block;"
