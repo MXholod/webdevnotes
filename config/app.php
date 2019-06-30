@@ -159,7 +159,11 @@ return [
         // Webdev\Providers\BroadcastServiceProvider::class,
         Webdev\Providers\EventServiceProvider::class,
         Webdev\Providers\RouteServiceProvider::class,
-
+        
+        /*
+         * Our own packages
+         */
+        Unisharp\Ckeditor\ServiceProvider::class,
     ],
 
     /*

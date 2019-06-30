@@ -5,6 +5,7 @@
 /public/fonts
 /public/js
 /public/images
+/public/vendor
 /storage/*.key
 /storage/debugbar
 /vendor
