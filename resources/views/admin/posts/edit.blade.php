@@ -1,0 +1,38 @@
+@extends('admin.layouts.admin_app')
+@section('content')
+    @push('webdev_scripts')
+        <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
+        <script>
+            window.onload=function(){
+                //CKEDITOR.replace( 'description' );
+                CKEDITOR.replace( 'description',
+            {
+                customConfig : 'config.js',
+                toolbar : 'simple'
+            });
+                CKEDITOR.replace( 'descriptionFull' );
+            };
+        </script>
+    @endpush
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                @component('admin.components.breadcrumbs')
+                    @slot('title') Редактирование статьи @endslot
+                    @slot('parent') Главная @endslot
+                    @slot('active') Статьи @endslot
+                @endcomponent
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <form action="{{route('admin.post.update', $post->id)}}" method="post">
+                    <input type="hidden" name="_method" value="put" />
+                    {{ csrf_field() }}
+                    @include('admin.posts.partitions.form')
+                    <input type="hidden" name="modified_by" value="{{Auth::id()}}" />
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection

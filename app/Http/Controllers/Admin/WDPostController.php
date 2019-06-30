@@ -71,9 +71,15 @@ class WDPostController extends Controller
      * @param  \Webdev\Models\BlogwdPost  $blogwdPost
      * @return \Illuminate\Http\Response
      */
-    public function edit(BlogwdPost $blogwdPost)
+    public function edit($id)
     {
         //
+        $post = BlogwdPost::find($id);
+        return view('admin.posts.edit',[
+            'post' => $post,
+            'categories'=> BlogwdCategory::with('children')->where('parent_id',0)->get(),
+            'delimiter'=> ''
+        ]);
     }
 
     /**
@@ -83,9 +89,31 @@ class WDPostController extends Controller
      * @param  \Webdev\Models\BlogwdPost  $blogwdPost
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BlogwdPost $blogwdPost)
+    public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'title' => 'required',
+            'meta_title' => 'required',
+            'meta_keywords' => 'required',
+            'meta_description' => 'required'
+        ]);
+        $post = BlogwdPost::find($id);
+            $post->modified_by = $request->get('modified_by');
+            $post->published = $request->get('published');
+            $post->title = $request->get('title');
+            //Categories
+            $post->categories()->detach();
+            if($request->get('categories')){
+                $post->categories()->attach($request->get('categories'));
+            }
+            $post->meta_title = $request->get('meta_title');
+            $post->meta_description = $request->get('meta_description');
+            $post->meta_keywords = $request->get('meta_keywords');
+            $post->description = $request->get('description');
+            $post->full_text = $request->get('full_text');
+        $post->save();
+        return redirect()->route('admin.post.index');
     }
 
     /**
