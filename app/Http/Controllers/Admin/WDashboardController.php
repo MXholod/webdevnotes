@@ -12,7 +12,8 @@ class WDashboardController extends Controller
     //WDashboard
     public function wdashboard(){
         return view('admin.wdashboard',[
-            'categories'=> BlogwdCategory::lastCategories(5)
+            'categories'=> BlogwdCategory::lastCategories(5),
+            'posts'=> BlogwdPost::lastPosts(5)
         ]);
     }
 }

@@ -33,4 +33,8 @@ class BlogwdPost extends Model
     public function categories(){
         return $this->morphToMany('Webdev\Models\BlogwdCategory','blogwd_categoryable');//categoryable
     }
+    
+    public function scopeLastPosts($query, $count){
+        return $query->orderBy('created_at','desc')->take($count)->get();
+    }
 }

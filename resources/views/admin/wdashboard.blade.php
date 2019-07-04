@@ -20,7 +20,19 @@
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <h2>Posts</h2>
-                
+                <p>Amount of Posts: 4</p>
+                <dl>
+                    @foreach($posts as $post)
+                        <dt>
+                            <a href="{{ route('admin.post.edit',$post->id)}}">
+                                    {{ $post->title }}
+                                </a>
+                        </dt>
+                        <dd>
+                            {{ $post->categories()->pluck('title')->implode(", ") }}
+                        </dd>
+                    @endforeach
+                </dl>
             </div>
         </div>
     </div>
