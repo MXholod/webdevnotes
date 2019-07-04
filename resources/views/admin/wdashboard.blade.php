@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <h2>Categories</h2>
-                <p>Amount of Categories: 4</p>
+                <p>Amount of Categories: {{ $amount_categories }}</p>
                 <dl>
                     @foreach($categories as $category)
                         <dt>
@@ -20,7 +20,7 @@
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <h2>Posts</h2>
-                <p>Amount of Posts: 4</p>
+                <p>Amount of Posts: {{ $amount_posts }}</p>
                 <dl>
                     @foreach($posts as $post)
                         <dt>
