@@ -37,4 +37,8 @@ class BlogwdCategory extends Model
     public function scopeLastCategories($query, $count){
         return $query->orderBy('created_at','desc')->take($count)->get();
     }
+    
+    public function scopeIsPublished($query){
+        return $query->where('published',1);
+    }
 }

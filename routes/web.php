@@ -11,9 +11,6 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
 /*Routes for Administrative zone*/
 Route::group([
     'prefix'=>'admin', //Part in URI
@@ -25,7 +22,11 @@ Route::group([
         Route::resource('/post','WDPostController',['as'=>'admin']);
     }
 );
-
-Route::view('/', 'welcome');
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+//Main page of the site
+Route::get('/',function(){
+    return view('blogwd.home');
+});
+
+//Route::view('/', 'welcome');
+//Route::get('/home', 'HomeController@index')->name('home');
