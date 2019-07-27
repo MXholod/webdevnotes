@@ -40,6 +40,8 @@ body{
     .parent-menu{
         height:$height-menu-item;
 	border:1px solid #000;
+        position:relative;
+        z-index:1;
         li{
             height:$height-menu-item;
             float:left;
