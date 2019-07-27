@@ -26,10 +26,6 @@
     @include('admin.posts.partitions.nested_categories', ['categories'=>$categories])
 </select>
 
-<label for="metaTitle">meta-title</label>
-<input type="text" class="form-control" id="metaTitle" name="meta_title" placeholder="meta-title" 
-    value="{{$post->meta_title ?? ''}}" required />
-
 <label for="metaDescription">meta_description</label>
 <input type="text" class="form-control" id="metaDescription" name="meta_description" placeholder="meta-description" 
     value="{{$post->meta_description ?? ''}}" required />

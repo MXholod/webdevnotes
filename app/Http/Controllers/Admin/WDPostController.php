@@ -95,7 +95,6 @@ class WDPostController extends Controller
         //
         $request->validate([
             'title' => 'required',
-            'meta_title' => 'required',
             'meta_keywords' => 'required',
             'meta_description' => 'required',
             'description' => 'required',
@@ -110,7 +109,6 @@ class WDPostController extends Controller
                 //Attach fields in database 'blogwd_categoryables' again
                 $post->categories()->attach($request->get('categories'));
             }
-            $post->meta_title = $request->get('meta_title');
             $post->meta_description = $request->get('meta_description');
             $post->meta_keywords = $request->get('meta_keywords');
             $post->description = $request->get('description');
