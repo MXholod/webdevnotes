@@ -59,7 +59,11 @@ class BlogwdServiceProvider extends ServiceProvider
             $parents_arr[$value->parent_id][$value->id] = $child_arr;
         }
         //First parent array
-        $treeElem = $parents_arr[0];
+        if(empty($parents_arr[0])){
+            $treeElem = [];
+        }else{
+            $treeElem = $parents_arr[0];
+        }
         $this->generateMenuTree($treeElem,$parents_arr);
         return $treeElem;
     }
