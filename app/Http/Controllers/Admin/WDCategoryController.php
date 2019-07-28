@@ -97,6 +97,8 @@ class WDCategoryController extends Controller
         $category = BlogwdCategory::find($id);
             $category->published = $request->get('published');
             $category->title = $request->get('title');
+            $category->meta_keywords = $request->get('meta_k');
+            $category->meta_description = $request->get('meta_d');
             $category->description = $request->get('description');
             $category->parent_id = $request->get('parent_id');
         $category->save();

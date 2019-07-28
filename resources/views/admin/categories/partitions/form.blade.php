@@ -16,6 +16,15 @@
 <label for="title">Наименование</label>
 <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок категории" 
     value="{{$category->title ?? ''}}" required />
+
+<label for="m-desc">meta_description</label>
+<input type="text" class="form-control" id="m-desc" name="meta_d" placeholder="Meta описание" 
+    value="{{$category->meta_description ?? ''}}" />
+
+<label for="m-key">meta-keywords</label>
+<input type="text" class="form-control" id="m-key" name="meta_k" placeholder="Meta слова" 
+    value="{{$category->meta_keywords ?? ''}}" />
+
 <label for="descriptionCat">Описание категории</label>
 <textarea cols="20" rows="2" id="descriptionCat" name="description" style="width:100%">
     {{$category->description ?? ''}}
