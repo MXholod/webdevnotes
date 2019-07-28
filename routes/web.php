@@ -27,6 +27,8 @@ Auth::routes();
 Route::get('/',function(){
     return view('blogwd.home');
 });
-
+//
+Route::get('/category/{slug?}','WDBlogController@category')->name('category');
+Route::get('/post/{slug?}','WDBlogController@post')->name('post');
 //Route::view('/', 'welcome');
 //Route::get('/home', 'HomeController@index')->name('home');
