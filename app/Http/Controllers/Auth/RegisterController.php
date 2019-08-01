@@ -2,7 +2,7 @@
 
 namespace Webdev\Http\Controllers\Auth;
 
-use Webdev\User;
+use Webdev\Models\User;
 use Webdev\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -28,8 +28,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
+    protected $redirectTo = '/';
+    
     /**
      * Create a new controller instance.
      *
@@ -49,8 +49,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'login' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:wdusers',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -64,7 +64,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'login' => $data['login'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

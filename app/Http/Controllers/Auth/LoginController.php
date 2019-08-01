@@ -26,8 +26,13 @@ class LoginController extends Controller
      * @var string
      */
     //protected $redirectTo = '/home';
-    protected $redirectTo = '/admin';
-
+    //protected $redirectTo = '/admin';
+    //Use Method instead of property - protected $redirectTo = '/admin'; to use route() helper
+    public function redirectTo()
+    {
+        //Go to the Main Admin Page
+        return route('admin.index');
+    }
     /**
      * Create a new controller instance.
      *
