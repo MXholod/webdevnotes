@@ -1,9 +1,18 @@
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <label for="login">Логин</label>
 <input type="text" class="form-control" id="login" name="login" placeholder="Логин" 
-    value="{{$user->login ?? ''}}" required />
+    value="@if(old('login')){{old('login')}}@else{{$user->login ?? ''}}@endif" required />
 <label for="email">Почта</label>
 <input type="email" class="form-control" id="email" name="email" placeholder="Почта" 
-    value="{{$user->email ?? ''}}" required />
+    value="@if(old('email')){{old('email')}}@else{{$user->email ?? ''}}@endif" required />
 <label for="password">Пароль</label>
 <input type="password" class="form-control" id="password" name="password" placeholder="Пароль" 
     required />

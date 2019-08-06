@@ -43,6 +43,17 @@ class WDUserController extends Controller
     public function store(Request $request)
     {
         //
+        $validation = $request->validate([
+            'login' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:wdusers',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+        User::create([
+            'login' => $request['login'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password'])
+        ]);
+        return redirect()->route('admin.user_management.user.index');
     }
 
     /**
