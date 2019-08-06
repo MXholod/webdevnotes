@@ -14,11 +14,9 @@
 <input type="email" class="form-control" id="email" name="email" placeholder="Почта" 
     value="@if(old('email')){{old('email')}}@else{{$user->email ?? ''}}@endif" required />
 <label for="password">Пароль</label>
-<input type="password" class="form-control" id="password" name="password" placeholder="Пароль" 
-    required />
+<input type="password" class="form-control" id="password" name="password" placeholder="Пароль" />
 <label for="password">Подтверждение пароля</label>
-<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Пароль" 
-    required />
+<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Пароль" />
 
 <label>
     <input type="submit" class="btn btn-primary" value="Сохранить" />
