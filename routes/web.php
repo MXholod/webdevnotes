@@ -20,6 +20,16 @@ Route::group([
         Route::get('/','WDashboardController@wdashboard')->name('admin.index');
         Route::resource('/category','WDCategoryController',['as'=>'admin']);
         Route::resource('/post','WDPostController',['as'=>'admin']);
+        Route::group([
+            // Full prefix is - admin/user_managment - because user_managment is nested.
+            'prefix'=>'user_managment',
+            // Full namespace is - Admin\UserManagement - because UserManagement is nested.
+            'namespace'=>'UserManagement'
+            ],
+            function(){
+               Route::resource('/user','WDUserController',['as'=>'admin.user_management']); 
+            }
+         );
     }
 );
 Auth::routes();
@@ -32,3 +42,5 @@ Route::get('/category/{slug?}','WDBlogController@category')->name('category');
 Route::get('/post/{slug?}','WDBlogController@post')->name('post');
 //Route::view('/', 'welcome');
 //Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/register', 'Auth\MyRegisterController@form')->name('register');
+//Route::post('/register', 'Auth\MyRegisterController@register');
