@@ -119,8 +119,11 @@ class WDUserController extends Controller
      * @param  \Webdev\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('admin.user_management.user.index');
     }
 }
