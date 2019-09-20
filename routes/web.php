@@ -10,12 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
+Auth::routes(['verify' => true]);
 /*Routes for Administrative zone*/
 Route::group([
     'prefix'=>'admin', //Part in URI
     'namespace'=>'Admin',//As folder name 'Admin' where Controllers lay
-    'middleware'=>['auth']],//From file Kernel, it allows don't write in Controllers
+    'middleware'=>['auth','verified']],//From file Kernel, it allows don't write in Controllers
     function(){
         Route::get('/','WDashboardController@wdashboard')->name('admin.index');
         Route::resource('/category','WDCategoryController',['as'=>'admin']);
@@ -39,7 +39,7 @@ Route::get('/',function(){
 });
 //User's cabinet
 
-Route::get('/cabinet','Cabinet\WDBlogCabinetController@index')->name('user_cabinet')->middleware(['auth']);
+Route::get('/cabinet','Cabinet\WDBlogCabinetController@index')->name('user_cabinet')->middleware(['auth','verified']);
 
 Route::get('/category/{slug?}','WDBlogController@category')->name('category');
 Route::get('/post/{slug?}','WDBlogController@post')->name('post');
