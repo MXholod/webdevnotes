@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Auth::routes();
 /*Routes for Administrative zone*/
 Route::group([
     'prefix'=>'admin', //Part in URI
@@ -32,15 +32,14 @@ Route::group([
          );
     }
 );
-Auth::routes();
+
 //Main page of the site
 Route::get('/',function(){
     return view('blogwd.home');
 });
-//
+//User's cabinet
+
+Route::get('/cabinet','Cabinet\WDBlogCabinetController@index')->name('user_cabinet')->middleware(['auth']);
+
 Route::get('/category/{slug?}','WDBlogController@category')->name('category');
 Route::get('/post/{slug?}','WDBlogController@post')->name('post');
-//Route::view('/', 'welcome');
-//Route::get('/home', 'HomeController@index')->name('home');
-//Route::get('/register', 'Auth\MyRegisterController@form')->name('register');
-//Route::post('/register', 'Auth\MyRegisterController@register');
