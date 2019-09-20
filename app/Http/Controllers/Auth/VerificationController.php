@@ -5,7 +5,7 @@ namespace Webdev\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
-
+use Illuminate\Support\Facades\Auth;
 class VerificationController extends Controller
 {
     /*
@@ -26,7 +26,17 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/cabinet';
+     public function redirectTo()
+    {
+        if(Auth::user()->id == 1){
+        //Go to the Main Admin Page
+            return '/admin';
+        }
+        else{
+            return '/cabinet';
+        }
+    }
 
     /**
      * Create a new controller instance.

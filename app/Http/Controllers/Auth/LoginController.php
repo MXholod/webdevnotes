@@ -4,7 +4,7 @@ namespace Webdev\Http\Controllers\Auth;
 
 use Webdev\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /*
@@ -30,8 +30,13 @@ class LoginController extends Controller
     //Use Method instead of property - protected $redirectTo = '/admin'; to use route() helper
     public function redirectTo()
     {
+        if(Auth::user()->id == 1){
         //Go to the Main Admin Page
-        return route('admin.index');
+            return '/admin';
+        }
+        else{
+            return '/cabinet';
+        }
     }
     /**
      * Create a new controller instance.

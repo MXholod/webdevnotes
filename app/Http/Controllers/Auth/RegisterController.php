@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+
 class RegisterController extends Controller
 {
     /*
@@ -28,7 +31,15 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    //protected $redirectTo = '/cabinet';
+    private $keepLoginTemporary = '';
+    public function redirectTo()
+    {
+        //Save Login into the Session if Registration is success
+        session(['login' => $this->keepLoginTemporary]);
+        //Go to the Email Notification Page after Registration
+        return route('after_register');
+    }
     
     /**
      * Create a new controller instance.
@@ -68,5 +79,21 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    /**
+     *  Override Method from the Trait
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+        //We remove it to prevent LogIn user
+        //$this->guard()->login($user);
+       
+        //Save login into the property for using in the Session
+        $this->keepLoginTemporary = $request->input('login');
+
+        return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
 }

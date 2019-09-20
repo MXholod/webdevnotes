@@ -38,7 +38,7 @@ Route::get('/',function(){
     return view('blogwd.home');
 });
 //User's cabinet
-
+Route::get('/email-notifier','Auth\EmailAffirmationController@afterRegistration')->name('after_register');
 Route::get('/cabinet','Cabinet\WDBlogCabinetController@index')->name('user_cabinet')->middleware(['auth','verified']);
 
 Route::get('/category/{slug?}','WDBlogController@category')->name('category');
