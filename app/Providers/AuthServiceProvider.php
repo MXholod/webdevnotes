@@ -25,6 +25,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        //Determine Administrator role
+        Gate::define('IS_ADMIN', function ($user) {
+            return $user->hasRole('Administrator');//true or false
+        });
+        //Moderator may view admin panel if he has permissions
+        Gate::define('VIEW_ADMIN_PANEL', function ($user) {
+            $is_moderator = $user->hasRole(['Administrator','Moderator']);//true or false
+            $permission = $user->canDo('VIEW_ADMIN_PANEL');//true or false
+            if($is_moderator && $permission){
+                return true;
+            }else{
+                return false;
+            }  
+        });
     }
 }
