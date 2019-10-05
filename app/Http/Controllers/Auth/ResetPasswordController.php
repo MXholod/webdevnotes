@@ -25,7 +25,12 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/cabinet';
+    //protected $redirectTo = '/cabinet';
+    public function redirectTo()
+    {
+        //Go to the User's Cabinet Page
+            return '/cabinet';
+    }
 
     /**
      * Create a new controller instance.
