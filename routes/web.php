@@ -15,7 +15,7 @@ Auth::routes(['verify' => true]);
 Route::group([
     'prefix'=>'admin', //Part in URI
     'namespace'=>'Admin',//As folder name 'Admin' where Controllers lay
-    'middleware'=>['auth','verified']],//From file Kernel, it allows don't write in Controllers
+    'middleware'=>['auth','verified','admin.panel.access']],//From file Kernel, it allows don't write in Controllers
     function(){
         Route::get('/','WDashboardController@wdashboard')->name('admin.index');
         Route::resource('/category','WDCategoryController',['as'=>'admin']);
@@ -39,7 +39,7 @@ Route::get('/',function(){
 });
 //User's cabinet
 Route::get('/email-notifier','Auth\EmailAffirmationController@afterRegistration')->name('after_register');
-Route::get('/cabinet','Cabinet\WDBlogCabinetController@index')->name('user_cabinet')->middleware(['auth','verified']);
+Route::get('/cabinet','Cabinet\WDBlogCabinetController@index')->name('user_cabinet')->middleware(['auth','verified','admin.panel.cabinet']);
 
 Route::get('/category/{slug?}','WDBlogController@category')->name('category');
 Route::get('/post/{slug?}','WDBlogController@post')->name('post');
