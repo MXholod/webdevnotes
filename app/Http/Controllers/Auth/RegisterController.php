@@ -74,11 +74,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'login' => $data['login'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        //Set role Guest with role_id 3 into the Pivot table. By default when a User is registered.
+        $user->roles()->attach(3);//$roleId
+        return $user;
     }
     /**
      *  Override Method from the Trait
