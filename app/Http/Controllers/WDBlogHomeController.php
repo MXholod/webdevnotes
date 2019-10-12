@@ -4,16 +4,16 @@ namespace Webdev\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class WDBlogHomeController extends Controller
 {
-    /**
+     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('blogwd.home',['test' => "Hello! This is a main page."]);
     }
 }
