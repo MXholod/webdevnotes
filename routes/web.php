@@ -36,7 +36,7 @@ Route::group([
 //Main page of the site
 Route::get('/','WDBlogHomeController@index');
 //Contacts, About pages
-Route::get('/contacts','WDBlogContactsController@index');
+Route::get('/contacts','WDBlogContactController@index');
 Route::get('/about','WDBlogAboutController@index');
 //User's cabinet
 Route::get('/email-notifier','Auth\EmailAffirmationController@afterRegistration')->name('after_register');

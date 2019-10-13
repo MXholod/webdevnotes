@@ -4,7 +4,7 @@ namespace Webdev\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class WDBlogContactsController extends Controller
+class WDBlogContactController extends Controller
 {
     //
     public function index(){
