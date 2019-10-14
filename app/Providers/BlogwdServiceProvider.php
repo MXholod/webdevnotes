@@ -4,7 +4,7 @@ namespace Webdev\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
-
+use Webdev\Http\ViewComposers\StaticNavigationComposer;
 class BlogwdServiceProvider extends ServiceProvider
 {
     /**
@@ -24,17 +24,14 @@ class BlogwdServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Top multilevel menu
         $this->topMenu();
+        //Static pages menu
+        view()->composer('layouts.static_pages_menu', StaticNavigationComposer::class);
+        //Static pages menu
+        //$this->staticPages();
     }
-    private $test = array(
-        ["id"=>1,"title"=>"Первая категория","parent_id"=>0],
-        ["id"=>2,"title"=>"Вторая","parent_id"=>1],
-        ["id"=>3,"title"=>"Третья","parent_id"=>2],
-        ["id"=>4,"title"=>"Четвёртая","parent_id"=>2],
-        ["id"=>7,"title"=>"Пятая категория","parent_id"=>0],
-        ["id"=>8,"title"=>"Шестая категория","parent_id"=>2]
-    );
+    //Dynamic multilevel menu
     public function topMenu(){
         //Facade View
         View::composer('layouts.header', function($view){
@@ -79,30 +76,15 @@ class BlogwdServiceProvider extends ServiceProvider
                 $this->generateMenuTree($treeElem[$key]['sublevel'],$parents_arr);
             }
         }
-        
     }
-    /*
-     * $arr_cat - is an Array where keys are identifiers of the parent categories
-       $arr_cat = [
-                    0=>[],
-                    1=>[],
-                    2=>[],
-                    5=>[],
-                ]
-    
-    public function prepareStructureTree($publishedItems){
-        if(count($publishedItems) != 0){
-            $arr_cat = array();
-            foreach($publishedItems as $v1){
-                //If parent is empty create an Array
-                if(empty($arr_cat[$v1->parent_id])){
-                    $arr_cat[$v1->parent_id] = array();//$arr_cat = [ 0=>array() ];
-                }
-                //If parent array is already exists save child category
-                $arr_cat[$v1->parent_id][] = $v1;//= $v1->title." ".$v1->parent_id;
-            }
-            return $arr_cat;
-        }
-    }
-    */
+    //Menu for static pages
+    /*public function staticPages(){
+        //Facade View
+        View::composer('layouts.static_pages_menu', function($view){
+            
+            $only_published = \Webdev\Models\BlogwdStaticPage::isPublished()->get();
+            
+            $view->with('staticPages',$only_published);//$prepare_categories $menu_categories
+        });
+    }*/
 }

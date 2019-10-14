@@ -50,3 +50,4 @@
                 </div>
             
         </nav>
+@include('layouts.static_pages_menu')
