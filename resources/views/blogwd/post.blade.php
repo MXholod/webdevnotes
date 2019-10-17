@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') $post->title @endsection
+@section('title') {{$post->title}} @endsection
 @section('meta_description') {{$post->meta_description}} @endsection
 @section('meta_keywords') {{$post->meta_keywords}} @endsection
 
