@@ -4,6 +4,7 @@ namespace Webdev\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Webdev\Models\BlogwdErrorPage;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($this->isHttpException($exception)) {
+            //Create page name like: errors/404.blade.php
+            $pageName = strval($exception->getStatusCode());
+            //Concat page name with folder 'errors'
+            $view = "errors.{$pageName}";
+            //Check if View exists
+            if(view()->exists($view)) {
+                //Get the page data
+                $page = BlogwdErrorPage::isPublished()->where("path",$pageName)->first();
+                //Return data
+                return response()->view($view, [
+                    'title'=>$page->title,
+                    'meta_description'=>$page->meta_description,
+                    'meta_keywords'=>$page->meta_keywords,
+                    'description'=>$page->description,
+                    'full_text'=>$page->full_text,
+                    'status'=>$exception->getStatusCode(),
+                    'exception' => $exception,
+                ], $exception->getStatusCode());
+            }
+        }
+
         return parent::render($request, $exception);
     }
 }
