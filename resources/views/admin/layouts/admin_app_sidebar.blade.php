@@ -14,7 +14,7 @@
               <a class="nav-link" href="{{route('admin.user_management.user.index')}}">Управление пользователями</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="{{route('admin.static-page.index')}}">Статические страницы</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
