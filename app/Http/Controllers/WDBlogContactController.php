@@ -13,8 +13,9 @@ class WDBlogContactController extends Controller
         $path = $request->path();
         //The e function runs PHP's htmlspecialchars function with the double_encode option set to true by default
         $path = e($path);
+        $pathWithSlash = "/".$path;
         //Get data from DB for page according to the URN
-        $pageData = DB::table('blogwd_static_pages')->where('path', $path)->first();
+        $pageData = DB::table('blogwd_static_pages')->where('path', $path)->orWhere('path',$pathWithSlash)->first();
         if(!is_null($pageData)){
             //Apply the data to the View
             return view('blogwd.contacts',['pageData' => $pageData]);
