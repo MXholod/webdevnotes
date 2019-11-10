@@ -3,9 +3,9 @@
 namespace Webdev\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class WDBlogHomeController extends Controller
+
+class WDBlogHomeController extends WDBlogBaseController
 {
      /**
      * Create a new controller instance.
@@ -18,23 +18,19 @@ class WDBlogHomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Draw the data from DB in the view
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return view or abort
      */
     public function index(Request $request)
     {
-        //Get URN path
-        $path = $request->path();
-        //The e function runs PHP's htmlspecialchars function with the double_encode option set to true by default
-        $path = e($path);
-        //Get data from DB for page according to the URN
-        $pathWithSlash = "/".$path;
-        //Get data from DB for page according to the URN
-        $pageData = DB::table('blogwd_static_pages')->where('path', $path)->orWhere('path',$pathWithSlash)->first();
+        //Get data for this page according to the request
+        $pageData = $this->getStaticPageData($request);
+        //Check incoming page data
         if(!is_null($pageData)){
             //Apply the data to the View
-            return view('blogwd.home',['pageData' => $pageData]);
+            return view('blogwd.home', ['pageData' => $pageData]);
         }else{
             //404
             abort(404,"Такой страницы не существует");
