@@ -8,10 +8,10 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <h2>{{ $pageData->description }}</h2>
+                <h2>{!! $pageData->description !!}</h2>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <h2>{{ $pageData->full_text }}</h2>
+                <h2>{!! $pageData->full_text !!}</h2>
             </div>
         </div>
     </div>
