@@ -60,9 +60,13 @@ class WDStaticPageController extends Controller
      * @param  \Webdev\Models\BlogwdStaticPage  $blogwdStaticPage
      * @return \Illuminate\Http\Response
      */
-    public function edit(BlogwdStaticPage $blogwdStaticPage)
+    public function edit($id)
     {
-        //
+        $stPage = BlogwdStaticPage::find($id);
+        return view('admin.static-pages.edit',[
+            'stPage' => $stPage
+        ]);
+        
     }
 
     /**
@@ -72,9 +76,25 @@ class WDStaticPageController extends Controller
      * @param  \Webdev\Models\BlogwdStaticPage  $blogwdStaticPage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BlogwdStaticPage $blogwdStaticPage)
+    public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'title' => 'required',
+            'meta_keywords' => 'required',
+            'meta_description' => 'required',
+            'description' => 'required',
+        ]);
+        $stPage = BlogwdStaticPage::find($id);
+            $stPage->published = $request->get('published');
+            $stPage->title = $request->get('title');
+            
+            $stPage->meta_description = $request->get('meta_description');
+            $stPage->meta_keywords = $request->get('meta_keywords');
+            $stPage->description = $request->get('description');
+            $stPage->full_text = $request->get('full_text');
+        $stPage->save();
+        return redirect()->route('admin.static-page.index');
     }
 
     /**
