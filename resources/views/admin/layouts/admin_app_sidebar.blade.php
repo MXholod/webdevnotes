@@ -17,7 +17,7 @@
               <a class="nav-link" href="{{route('admin.static-page.index')}}">Статические страницы</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="{{route('admin.error-page.index')}}">Страницы ошибок</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>

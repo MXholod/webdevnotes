@@ -1,0 +1,89 @@
+<?php
+
+namespace Webdev\Http\Controllers\Admin;
+
+use Webdev\Models\BlogwdErrorPage;
+use Illuminate\Http\Request;
+use Webdev\Http\Controllers\Controller;
+
+class WDErrorController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        return view('admin.error-pages.index',[
+            'errorPages'=> BlogwdErrorPage::orderBy('id','asc')->paginate(5)
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Webdev\Models\BlogwdErrorPage  $blogwdErrorPage
+     * @return \Illuminate\Http\Response
+     */
+    public function show(BlogwdErrorPage $blogwdErrorPage)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \Webdev\Models\BlogwdErrorPage  $blogwdErrorPage
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(BlogwdErrorPage $blogwdErrorPage)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Webdev\Models\BlogwdErrorPage  $blogwdErrorPage
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, BlogwdErrorPage $blogwdErrorPage)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Webdev\Models\BlogwdErrorPage  $blogwdErrorPage
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(BlogwdErrorPage $blogwdErrorPage)
+    {
+        //
+    }
+}
