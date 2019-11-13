@@ -56,16 +56,20 @@ class Handler extends ExceptionHandler
             if(view()->exists($view)) {
                 //Get the page data
                 $page = BlogwdErrorPage::isPublished()->where("path",$pageName)->first();
-                //Return data
-                return response()->view($view, [
-                    'title'=>$page->title,
-                    'meta_description'=>$page->meta_description,
-                    'meta_keywords'=>$page->meta_keywords,
-                    'description'=>$page->description,
-                    'full_text'=>$page->full_text,
-                    'status'=>$exception->getStatusCode(),
-                    'exception' => $exception,
-                ], $exception->getStatusCode());
+                if(!is_null($page)){
+                    //Return data
+                    return response()->view($view, [
+                        'title'=>$page->title,
+                        'meta_description'=>$page->meta_description,
+                        'meta_keywords'=>$page->meta_keywords,
+                        'description'=>$page->description,
+                        'full_text'=>$page->full_text,
+                        'status'=>$exception->getStatusCode(),
+                        'exception' => $exception,
+                    ], $exception->getStatusCode());
+                }else{
+                    return parent::render($request, $exception);
+                }
             }
         }
 

@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
-@section('title',$title)
-@section('meta_description'){{ $meta_description }} @endsection
-@section('meta_keywords'){{ $meta_keywords }} @endsection
+@section('title',$title ?? "500")
+@section('meta_description'){{ $meta_description ?? "Error 500"}} @endsection
+@section('meta_keywords'){{ $meta_keywords ?? "Error 500"}} @endsection
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <h2>{{$description}}</h2>
-                @if(isset($exception))
+                <div>{!!$description ?? ""!!}</div>
+                @if(isset($exception) && !isset($description))
                     <p>{{$exception->getMessage()}}</p>
                 @endif
-                <p>{{$full_text}}</p>
+                <div>{!!$full_text ?? "Internal server error 500"!!}</div>
                 <div style="text-align:center;font-size:32px;font-weight:bold;">
-                    {{$status}}
+                    {{$status ?? $exception->getMessage()}}
                 </div>
             </div>
         </div>
