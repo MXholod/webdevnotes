@@ -59,9 +59,13 @@ class WDErrorController extends Controller
      * @param  \Webdev\Models\BlogwdErrorPage  $blogwdErrorPage
      * @return \Illuminate\Http\Response
      */
-    public function edit(BlogwdErrorPage $blogwdErrorPage)
+    public function edit($id)
     {
         //
+        $erPage = BlogwdErrorPage::find($id);
+         return view('admin.error-pages.edit',[
+            'errorPage'=> $erPage
+        ]);
     }
 
     /**
@@ -71,9 +75,26 @@ class WDErrorController extends Controller
      * @param  \Webdev\Models\BlogwdErrorPage  $blogwdErrorPage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BlogwdErrorPage $blogwdErrorPage)
+    public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'title' => 'required',
+            'meta_keywords' => 'required',
+            'meta_description' => 'required',
+            'description' => 'required',
+            'full_text' => 'required',
+        ]);
+        $stPage = BlogwdErrorPage::find($id);
+            $stPage->published = $request->get('published');
+            $stPage->title = $request->get('title');
+            
+            $stPage->meta_description = $request->get('meta_description');
+            $stPage->meta_keywords = $request->get('meta_keywords');
+            $stPage->description = $request->get('description');
+            $stPage->full_text = $request->get('full_text');
+        $stPage->save();
+        return redirect()->route('admin.error-page.index');
     }
 
     /**
