@@ -4,9 +4,10 @@ namespace Webdev\Http\Controllers\Admin;
 
 use Webdev\Models\BlogwdCategory;
 use Illuminate\Http\Request;
-use Webdev\Http\Controllers\Controller;
+use Webdev\Http\Controllers\Admin\WDBlogBaseController;
+//use Webdev\Http\Controllers\Controller;
 
-class WDCategoryController extends Controller
+class WDCategoryController extends WDBlogBaseController
 {
     /**
      * Display a listing of the resource.

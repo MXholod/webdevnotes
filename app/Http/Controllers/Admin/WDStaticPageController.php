@@ -4,9 +4,10 @@ namespace Webdev\Http\Controllers\Admin;
 
 use Webdev\Models\BlogwdStaticPage;
 use Illuminate\Http\Request;
-use Webdev\Http\Controllers\Controller;
+use Webdev\Http\Controllers\Admin\WDBlogBaseController;
+//use Webdev\Http\Controllers\Controller;
 
-class WDStaticPageController extends Controller
+class WDStaticPageController extends WDBlogBaseController
 {
     /**
      * Display a listing of the resource.
