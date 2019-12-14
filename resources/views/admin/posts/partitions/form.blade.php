@@ -34,6 +34,11 @@
 <input type="text" class="form-control" id="metaKeywords" name="meta_keywords" placeholder="meta-keywords" 
     value="{{$post->meta_keywords ?? ''}}" required />
 
+<aditional-js-css-component 
+    :file-paths="{{json_encode($files)}}" 
+    :db-paths="{{json_encode($activeScripts)}}"
+    >
+</aditional-js-css-component>
 <label for="description">Краткое описание статьи</label>
 <textarea cols="20" rows="2" id="description" name="description" style="width:100%">
     {{$post->description ?? ''}}
