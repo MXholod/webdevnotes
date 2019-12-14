@@ -37,4 +37,7 @@ class BlogwdPost extends Model
     public function scopeLastPosts($query, $count){
         return $query->orderBy('created_at','desc')->take($count)->get();
     }
+    public function scripts(){
+        return $this->morphMany('Webdev\Models\BlogwdScript', 'scriptable');
+    }
 }
