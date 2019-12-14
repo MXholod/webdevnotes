@@ -11,7 +11,7 @@ use Webdev\Http\Controllers\Admin\WDBlogBaseController;
 class WDPostController extends WDBlogBaseController
 {
     /**
-     * Display a listing of the resource.
+     * Display a list of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -75,9 +75,16 @@ class WDPostController extends WDBlogBaseController
      */
     public function edit($id)
     {
+        $files = $this->getAllFiles("js/additional_js");
         //
         $post = BlogwdPost::find($id);
+        //Get a list of files that are not contained in the database and mix id and Model path.    
+        $model = \Webdev\Models\BlogwdScript::where('scriptable_id',$id)->take(1)->get()[0]->scriptable_type;        
+        $uniqueFilePaths = $this->getUnlikeDBPaths($files,$post->scripts,$id,$model);
+        
         return view('admin.posts.edit',[
+            'files'=>$uniqueFilePaths,
+            'activeScripts'=>$post->scripts, //\Webdev\Models\BlogwdPost::with('scripts')->get(),
             'post' => $post,
             'categories'=> BlogwdCategory::with('children')->where('parent_id',0)->get(),
             'delimiter'=> ''
@@ -93,6 +100,16 @@ class WDPostController extends WDBlogBaseController
      */
     public function update(Request $request, $id)
     {
+        
+        /*$header_or_footer_scripts = array();
+        for($i=0;count($request->all()) > $i; $i++){
+            if(is_array($request->{"activeScriptDestination-$i"})){
+               $header_or_footer_scripts[] = $request->{"activeScriptDestination-$i"}[0];
+            }
+        }*/
+       
+        
+    dd($request->all());//$header_or_footer_scripts);
         //
         $request->validate([
             'title' => 'required',
@@ -132,5 +149,32 @@ class WDPostController extends WDBlogBaseController
         //Delete current Post
         $post->delete();
         return redirect()->route('admin.post.index');
+    }
+    /**
+     * Get paths which don't exist in Database to display them in file block
+     *
+     * @param $arrFilePaths - array of file paths
+     * @param $arrDBPaths - array of databases paths
+     * @return array of unique
+     */
+    private function getUnlikeDBPaths($arrFilePaths,$arrDBPaths,$id,$model){
+        $allPathsInDb = array();
+        //Prepare array from Model class for array_diff() function
+        foreach($arrDBPaths as $dbpath){
+            $allPathsInDb[] = $dbpath->path_js;
+        }
+        //Get only unique paths for file paths block
+        $pathsAreNotInDb = array_diff($arrFilePaths,$allPathsInDb);
+        
+        $preparedFilePaths = [];
+        //Prepare array from Model class for array_diff() function
+        foreach($pathsAreNotInDb as $pathFile){
+            $itemPathsInDb['id'] = $id;
+            $itemPathsInDb['model'] = $model;
+            $itemPathsInDb['path'] = $pathFile;
+            
+            $preparedFilePaths[] = $itemPathsInDb;
+        }
+        return $preparedFilePaths;
     }
 }
