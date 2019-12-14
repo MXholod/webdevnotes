@@ -19,7 +19,9 @@ window.Vue = require('vue');
  * require('./components/ExampleComponent.vue').default
  **/
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+export const EventEmitter = new Vue();
+
+Vue.component('aditional-js-css-component', require('./components/additionalJSandCSS/AditionalJsCssComponent.vue').default);
 
 const app = new Vue({
     el: '#app'
