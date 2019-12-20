@@ -116,7 +116,7 @@ export default {
                     all = (this.incomingData.length * this.liHeight) + paddingTop + this.liHeight;
                 }
             let heightAll = all+"px";
-            return { height: heightAll};
+            return { height: heightAll };
         },
         showHideDialogBox(){
             return {accept_replace__block : !this.showDialogBox};//False at once when loaded
@@ -138,14 +138,13 @@ export default {
                     letter : data.letter,
                     highlited : data.highlited
                 });
-                //console.log("From dbs ",data);
             }
         });
     },
     mounted() {
-        //Get value from CSS when app was loaded first time, the biggest value is right:-125px;
-        let cssPropRight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
-        this.liHeight = parseInt(cssPropRight); 
+        //Get value from CSS when app was loaded first time;
+        let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
+        this.liHeight = parseInt(cssPropLiHeight); 
     }
 }
 </script>
