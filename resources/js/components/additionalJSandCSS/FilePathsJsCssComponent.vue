@@ -81,16 +81,40 @@ export default {
         //Transfer the prepared data by Event Bus
         toDBPathsComponent:function(event){
             this.showDialogBox = true;
-            //Delete current elementfrom the array
+            //Pull out and delete a current element from the array
             let transferObj = this.incomingData.splice(this.currentIndex,1);
+                //Prepare array data to transfer still without ID
                 this.dataPreparedFiles.model_id = transferObj[0].model_id; 
                 this.dataPreparedFiles.model = transferObj[0].model; 
                 this.dataPreparedFiles.path = transferObj[0].path; 
                 this.dataPreparedFiles.h_f = transferObj[0].h_f;
                 this.dataPreparedFiles.letter = transferObj[0].letter;
                 this.dataPreparedFiles.highlited = transferObj[0].highlited;
-            //Use Event Bus
-            EventEmitter.$emit("dataToDB",this.dataPreparedFiles);
+            //Save Vue context
+            let that = this;
+            //Call axios method 'post' to call Laravel method 'store' to add new row into DB
+            axios.post('http://webdevnotes/admin/scripts' ,{
+                //_method: 'post'
+                headers:{
+                    //'Content-type':'multipart/form-data'
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(that.dataPreparedFiles)
+            })
+            .then(function (response) {
+                //If Response is good from the server we get an ID from MySQL
+                if(response.data.id > 0){
+                    //Assign id that returned from MySQL as a property to the prpared data and send to component
+                    that.dataPreparedFiles.id = response.data.id; 
+                    //Use Event Bus
+                    EventEmitter.$emit("dataToDB",that.dataPreparedFiles);
+                }else{
+                    console.log(response);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
             //Reset index
             //this.currentIndex = 0;
         },

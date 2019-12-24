@@ -73,6 +73,7 @@ export default {
                 if(currentValue.header_or_footer == 1){
                     currentValue.letter = "F";
                 }
+                //Initial highlited value
                 currentValue.highlited = false;
                 this.incomingData.push(currentValue);
             });
@@ -134,10 +135,27 @@ export default {
                 this.dataPreparedFiles.h_f = transferObj[0].header_or_footer; 
                 this.dataPreparedFiles.letter = transferObj[0].letter;
                 this.dataPreparedFiles.highlited = transferObj[0].highlited;
-            //Use Event Bus
-            EventEmitter.$emit("dataToFiles",this.dataPreparedFiles);
-            //Reset index
-            //this.currentIndex = 0;
+            //Save Vue context
+            let that = this;
+            //Call axios method 'delete' to call Laravel method 'destroy($id)' to delete row in DB
+            axios.delete(`http://webdevnotes/admin/scripts/${transferObj[0].id}` ,{
+                //_method: 'delete'
+                headers:{
+                        'Content-type':'application/x-www-form-urlencoded'
+                    }
+                })
+              .then(function (response) {
+                    //If Response is good from the server we get an ID from MySQL
+                    if(response.data.id > 0){
+                        //Use Event Bus
+                        EventEmitter.$emit("dataToFiles",that.dataPreparedFiles);
+                    }else{
+                        //console.log(response);
+                    }
+              })
+              .catch(function (error) {
+                    console.log(error);
+            });
         },
         toRefuseFilePathsComponent:function(event){
             this.showDialogBox = true;
@@ -181,7 +199,8 @@ export default {
                     scriptable_type : data.model,
                     header_or_footer : data.h_f,
                     letter: data.letter,
-                    highlited: data.highlited
+                    highlited: data.highlited,
+                    id: data.id
                 });
             }
         });
