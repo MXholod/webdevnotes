@@ -166,9 +166,11 @@ export default {
         });
     },
     mounted() {
-        //Get value from CSS when app was loaded first time;
-        let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
-        this.liHeight = parseInt(cssPropLiHeight); 
+        if(this.files.length > 0){
+            //Get value from CSS when app was loaded first time;
+            let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
+            this.liHeight = parseInt(cssPropLiHeight); 
+        }
     }
 }
 </script>

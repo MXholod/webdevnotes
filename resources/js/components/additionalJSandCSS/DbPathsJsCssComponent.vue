@@ -207,12 +207,14 @@ export default {
         });
     },
     mounted() {
-        //Get value from CSS when app was loaded first time, the biggest value is right:-125px;
-        let cssPropRight = window.getComputedStyle(this.$refs.h_f[0],null).getPropertyValue("right");
-        this.startCss = parseInt(cssPropRight);
-        //Get a LI height when app was loaded first time.
-        let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
-        this.liHeight = parseInt(cssPropLiHeight);
+        if(this.dbpaths.length > 0){
+            //Get value from CSS when app was loaded first time, the biggest value is right:-125px;
+            let cssPropRight = window.getComputedStyle(this.$refs.h_f[0],null).getPropertyValue("right");
+            this.startCss = parseInt(cssPropRight);
+            //Get a LI height when app was loaded first time.
+            let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
+            this.liHeight = parseInt(cssPropLiHeight);
+        }
     }
 }
 </script>
