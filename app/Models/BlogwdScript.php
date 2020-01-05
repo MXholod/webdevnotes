@@ -12,6 +12,7 @@ class BlogwdScript extends Model
         'scriptable_id',
         'scriptable_type'
     ];
+    public $timestamps = false;
     //
     public function scriptable()
     {
