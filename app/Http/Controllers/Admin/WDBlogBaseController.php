@@ -8,6 +8,7 @@ use Webdev\Http\Controllers\Controller;
 class WDBlogBaseController extends Controller
 {
     /**
+     * Using this method in 'edit()' method of the child Controller 
      * Find all files relatively to the specified directory
      * and pack into an array with offset if their nested
      * 
@@ -61,6 +62,55 @@ class WDBlogBaseController extends Controller
             closedir($handle);
         }
         return $files;
+    }
+    /**
+     * Using this method in 'edit()' method of the child Controller.
+     * Get paths which don't exist in Database to display them in the file block
+     * 
+     * @param $arrFilePaths - array of file paths
+     * @param $arrDBPaths - array of databases paths
+     * @param $id - current post ID
+     * @param $model - the Model that is using in the Controller
+     * @return array of unique
+     */
+    protected function getUnlikeDBPaths($arrFilePaths,$arrDBPaths,$id,$model){
+        $allPathsInDb = array();
+        //Prepare array from Model class for array_diff() function
+        foreach($arrDBPaths as $dbpath){
+            $allPathsInDb[] = $dbpath->path_js;
+        }
+        //Get only unique paths for file paths block
+        $pathsAreNotInDb = array_diff($arrFilePaths,$allPathsInDb);
+        
+        $preparedFilePaths = [];
+        //Prepare array from Model class for array_diff() function
+        foreach($pathsAreNotInDb as $pathFile){
+            $itemPathsInDb['id'] = $id;
+            $itemPathsInDb['model'] = $model;
+            $itemPathsInDb['path'] = $pathFile;
+            
+            $preparedFilePaths[] = $itemPathsInDb;
+        }
+        return $preparedFilePaths;
+    }
+    /**
+     * Using this method in 'edit()' method of the child Controller. 
+     * Prepare data from DB (ORM type) to an Array
+     * 
+     * @param  $arrDBPaths - Rows from the DB Table according to the current Model
+     * @return array
+     */
+    protected function getDbPreparedData($arrDBPaths){
+        $allPathsInDb = array();$i=0;
+        foreach($arrDBPaths as $dbDataRow){
+            $allPathsInDb[$i]['id'] = $dbDataRow->id;
+            $allPathsInDb[$i]['path_js'] = $dbDataRow->path_js;
+            $allPathsInDb[$i]['header_or_footer'] = $dbDataRow->header_or_footer;
+            $allPathsInDb[$i]['scriptable_id'] = $dbDataRow->scriptable_id;
+            $allPathsInDb[$i]['scriptable_type'] = $dbDataRow->scriptable_type;
+            $i++;
+        }
+        return $allPathsInDb;
     }
    
 }
