@@ -112,5 +112,36 @@ class WDBlogBaseController extends Controller
         }
         return $allPathsInDb;
     }
+    /**
+     * Using this method in 'update(Request $request, $id)' method of the child Controller. 
+     * Prepare data depending on Request and make an Array for multiple Update
+     * 
+     * @param  $request from URI
+     * @return array [
+     *      ['id'=>2,'header_or_footer'=>0],
+     *      ['id'=>5,'header_or_footer'=>1]
+     *   ]
+     */
+    protected function updateScripts($request){
+         //Update 'JScript' items
+        if(((count($request->get('dbscripts'))!== 0) && (count($request->get('ids')) !== 0)) &&
+               ((count($request->get('dbscripts')) == count($request->get('ids'))))
+        ){
+          $arr_ids = $request->get('ids');
+          $arr_h_f = $request->get('dbscripts');
+          foreach($arr_ids as $row_id){
+            $result_arr[]['id'] = $row_id;  
+          }
+          $i_row = 0;
+          foreach($arr_h_f as $h_f){
+            $result_arr[$i_row]['header_or_footer'] = $h_f;  
+            $i_row++;
+          }
+       }else{
+           //"JScript items are not exist";
+           $result_arr = [];
+       }
+       return $result_arr;
+    }
    
 }
