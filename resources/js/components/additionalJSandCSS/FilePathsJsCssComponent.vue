@@ -115,8 +115,6 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
-            //Reset index
-            //this.currentIndex = 0;
         },
         toRefuseDBPathsComponent:function(event){
             this.showDialogBox = true;

@@ -49,7 +49,7 @@ import DbPathsComponent from "./DbPathsJsCssComponent.vue";
         created(){
             //Let's launch the polyfill just in case
             this.polyfillIsArray();
-            //Preparing incoming properties before transferring them to the children Components
+            //Preparing incoming properties before transferring them to the children Components            
             this.filePs = this.checkProp(this.filePaths);
             this.dbPs = this.checkProp(this.dbPaths);
         },

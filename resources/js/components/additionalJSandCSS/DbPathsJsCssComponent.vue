@@ -68,14 +68,16 @@ export default {
         //We prepare incoming data before they are used.
         prepareIncomingData: function(){
             this.dbpaths.forEach((currentValue, index, array)=>{
-                if(currentValue.header_or_footer == 0){
-                    currentValue.letter = "H";
+                if(currentValue.header_or_footer == 0){    
+                    //Set new Reactive property 'letter' to the Object
+                    Vue.set(currentValue,'letter',"H");
                 }
                 if(currentValue.header_or_footer == 1){
-                    currentValue.letter = "F";
+                    //Set new Reactiv property 'letter' to the Object
+                    Vue.set(currentValue,'letter',"F");
                 }
-                //Initial highlited value
-                currentValue.highlited = false;
+                //Set new Reactiv property 'letter' to the Object, initial highlited value
+                Vue.set(currentValue,'highlited',false);
                 this.incomingData.push(currentValue);
             });
         },
@@ -146,7 +148,7 @@ export default {
                     }
                 })
               .then(function (response) {
-                    //If Response is good from the server we get an ID from MySQL
+                    //If Response is good from the server we get an ID from MySQL.There's smth to delete.
                     if(response.data.id > 0){
                         //Use Event Bus
                         EventEmitter.$emit("dataToFiles",that.dataPreparedFiles);
