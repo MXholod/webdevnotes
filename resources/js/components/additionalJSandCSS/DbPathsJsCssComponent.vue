@@ -18,7 +18,7 @@
                     </span>
                     <span class="paths-list__text">{{dataItem.path_js}}</span>
                     <span 
-                        @click="showHide"  
+                        @click="showHide(index,$event)"  
                         class="paths-list__header-footer"
                         ref="h_f"
                     >
@@ -57,7 +57,6 @@ export default {
         return {
             incomingData:[],//Incoming data 
             currentIndex:0,
-            startCss:0,//Offset for radio buttons
             highlightedItem:{current:undefined,old:undefined},//Index for highlighted item
             showDialogBox:true,//Show hide dialog box
             dataPreparedFiles:{},//Prepared data before send,
@@ -87,18 +86,19 @@ export default {
            return (matches[1] || 'undefined').toLowerCase();
         },
         //Slide a little 'header-footer' panel forward and back
-        showHide:function($event){
+        showHide:function(index,$event){
             //Click must be only by element with a "paths-list__letter" class
             if($event.target.getAttribute('class') == "paths-list__letter"){
                 let rightVal = parseInt($event.target.parentNode.style.right);
                 //Do this only once. Initial value was mounted.
-                if(isNaN(rightVal) && (this.startCss != 0)){
+                if(isNaN(rightVal)){
                     $event.target.parentNode.style.right = "0px";
-                }else{//Attribute 'style' is already exists
-                    if(rightVal != 0){
-                        $event.target.parentNode.style.right = "0px";
+                }else{//Attribute 'style' is already exists, do this all other times  
+                    //
+                    if(rightVal == 0){//0 == 0
+                        $event.target.parentNode.style.right = (this.incomingData[index].panelHidden)+"px";
                     }else{
-                        $event.target.parentNode.style.right = this.startCss+"px";
+                        $event.target.parentNode.style.right = "0px";
                     }
                 }
             }
@@ -138,6 +138,7 @@ export default {
                 this.dataPreparedFiles.h_f = transferObj[0].header_or_footer; 
                 this.dataPreparedFiles.letter = transferObj[0].letter;
                 this.dataPreparedFiles.highlited = transferObj[0].highlited;
+                this.dataPreparedFiles.panelHidden = transferObj[0].panelHidden;
             //Save Vue context
             let that = this;
             //Call axios method 'delete' to call Laravel method 'destroy($id)' to delete row in DB
@@ -203,7 +204,8 @@ export default {
                     header_or_footer : data.h_f,
                     letter: data.letter,
                     highlited: data.highlited,
-                    id: data.id
+                    id: data.id,
+                    panelHidden: data.panelHidden
                 });
             }
         });
@@ -212,10 +214,28 @@ export default {
         if(this.dbpaths.length > 0){
             //Get value from CSS when app was loaded first time, the biggest value is right:-125px;
             let cssPropRight = window.getComputedStyle(this.$refs.h_f[0],null).getPropertyValue("right");
-            this.startCss = parseInt(cssPropRight);
+                //this.startCss = parseInt(cssPropRight);
+            this.incomingData[0].panelHidden = parseInt(cssPropRight);
             //Get a LI height when app was loaded first time.
             let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
             this.liHeight = parseInt(cssPropLiHeight);
+        }
+    },
+    updated(){
+        //Get value from CSS when app was loaded first time, the biggest value is right:-125px;
+        if(this.$refs.h_f[0]){
+            let cssPropRight = window.getComputedStyle(this.$refs.h_f[0],null).getPropertyValue("right");
+            //Update first element in Array only if value isn't 0.
+            if(parseInt(cssPropRight) !== 0){
+                this.incomingData[0].panelHidden = parseInt(cssPropRight);
+            }
+        }
+        //Get a LI height when app was loaded first time.
+        if(this.$refs.liItem[0]){
+            let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
+            this.liHeight = parseInt(cssPropLiHeight);
+        }else{
+            this.liHeight = 0;
         }
     }
 }

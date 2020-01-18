@@ -57,6 +57,7 @@ export default {
                     obj.h_f = 0;
                     obj.letter = "H";
                     obj.highlited = false;
+                    obj.panelHidden = 0;
                 this.incomingData.push(obj);
             });
         },
@@ -90,6 +91,7 @@ export default {
                 this.dataPreparedFiles.h_f = transferObj[0].h_f;
                 this.dataPreparedFiles.letter = transferObj[0].letter;
                 this.dataPreparedFiles.highlited = transferObj[0].highlited;
+                this.dataPreparedFiles.panelHidden = transferObj[0].panelHidden;
             //Save Vue context
             let that = this;
             //Call axios method 'post' to call Laravel method 'store' to add new row into DB
@@ -158,7 +160,8 @@ export default {
                     model : data.model,
                     h_f : data.h_f,
                     letter : data.letter,
-                    highlited : data.highlited
+                    highlited : data.highlited,
+                    panelHidden: data.panelHidden
                 });
             }
         });
