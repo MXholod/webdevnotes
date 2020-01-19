@@ -32,7 +32,7 @@
                                :checked="dataItem.letter == 'F'" value="1" :key="index" />
                         </label>
                     </span>
-                    <input type="hidden" name="ids[]" :value="dataItem.id" />
+                    <input type="hidden" name="paths[]" :value="dataItem.path_js" />
                 </li>
             </ul>
             <div :class="showHideDialogBox" class="accept_replace__block_hide" :style="setHeightDialogBox">
