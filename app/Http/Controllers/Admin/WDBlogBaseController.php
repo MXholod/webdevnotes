@@ -176,7 +176,7 @@ class WDBlogBaseController extends Controller
      *   ]
      */
     protected function updateScripts($request){
-        if(!is_array($request->get('dbscripts')) || !is_arrray($request->get('ids'))){
+        if(!is_array($request->get('dbscripts')) || !is_array($request->get('ids'))){
             return [];
         }
          //Update 'JScript' items

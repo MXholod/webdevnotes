@@ -162,6 +162,7 @@ class WDPostController extends WDBlogBaseController
         $post->categories()->detach();
         //Delete current Post
         $post->delete();
+        DB::table('blogwd_scripts')->where('scriptable_id', '=', $id)->delete();
         return redirect()->route('admin.post.index');
     }
 }
