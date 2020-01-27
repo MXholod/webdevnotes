@@ -6,6 +6,7 @@ use Webdev\Models\BlogwdPost;
 use Webdev\Models\BlogwdCategory;
 use Illuminate\Http\Request;
 use Webdev\Http\Controllers\Admin\WDBlogBaseController;
+use DB;
 //use Webdev\Http\Controllers\Controller;
 
 class WDPostController extends WDBlogBaseController
@@ -30,8 +31,13 @@ class WDPostController extends WDBlogBaseController
      */
     public function create()
     {
-        //
+        //We've got the whole list of file paths
+        $files = $this->getAllFiles("js/additional_js");
+        //Model name    
+        $model = "Webdev\Models\BlogwdPost";
         return view('admin.posts.create',[
+            'firstFiles'=>$this->prepareFilesBeforeCreate($files,0,$model),
+            'firstScripts'=>array(),
             'post'=> [],
             'categories'=> BlogwdCategory::with('children')->where('parent_id',0)->get(),
             'delimiter'=> ''
@@ -46,8 +52,16 @@ class WDPostController extends WDBlogBaseController
      */
     public function store(Request $request)
     {
-        //
+        //Model name    
+        $model = "Webdev\Models\BlogwdPost";
         $post = BlogwdPost::create($request->all());
+        //Get current resource ID from '$post->id'. It is needed for 'blogwd_scripts' table
+        $arraToInsert = $this->insertPathsWhenCreated($request->paths, $request->dbscripts, $post->id, $model);
+        //If array isn't empty. It means JS file/s was/were added to a resource.
+        if(!empty($arraToInsert)){
+            //Multiple inserts or one insert it depends on incomind data
+            DB::table('blogwd_scripts')->insert($arraToInsert);
+        }
         //Categories
         if($request->input('categories')){
             //Attach fields in database 'blogwd_categoryables'
@@ -79,8 +93,10 @@ class WDPostController extends WDBlogBaseController
         $files = $this->getAllFiles("js/additional_js");
         //
         $post = BlogwdPost::find($id);
+        
         //Model name    
         $model = "Webdev\Models\BlogwdPost";
+        //dd($this->getUnlikeDBPaths($files,$post->scripts,$id,$model));
         return view('admin.posts.edit',[
             // ’files’ и  'activeScripts' – данные для Vue компонентов
             'files'=>$this->getUnlikeDBPaths($files,$post->scripts,$id,$model),
@@ -121,9 +137,18 @@ class WDPostController extends WDBlogBaseController
             $post->description = $request->get('description');
             $post->full_text = $request->get('full_text');
         $post->save();
+        //Update header_or_footer field in table 'blogwd_scripts'.
+        $scripts_h_f = $this->updateScripts($request);
+           if(count($scripts_h_f) > 0){
+               for($j=0;$j<count($scripts_h_f);$j++){
+                   \Webdev\Models\BlogwdScript::where('id',$scripts_h_f[$j]['id'])
+                           ->where('scriptable_id',$id)
+                           ->update($scripts_h_f[$j]);
+                 }
+           }   
         return redirect()->route('admin.post.index');
     }
-
+         
     /**
      * Remove the specified resource from storage.
      *
