@@ -1,7 +1,7 @@
 <template>
-    <div class="card card-default float-left col-sm-12 col-md-6 col-lg-6 col-xl-6" style="height:200px; background-color: rgba(0,0,255,0.1);"> 
+    <div class="card card-default float-left col-sm-12 col-md-6 col-lg-6 col-xl-6" style="height:200px;background-color: rgba(0,0,255,0.1);"> 
         <div class="card-header text-center">
-            Database JS scripts
+            Скрипты для этого ресурса
         </div>
         <div class="card-body overflow-auto accept_replace">
             <ul class="paths-list">
@@ -51,6 +51,7 @@
 </template>
 <script>
 import { EventEmitter } from "../../app.js";
+import route from './../../routesExtractFromJson';
 export default {
     props:["dbpaths"],
     data(){
@@ -144,7 +145,8 @@ export default {
             //Save Vue context
             let that = this;
             //Call axios method 'delete' to call Laravel method 'destroy($id)' to delete row in DB
-            axios.delete(`http://webdevnotes/admin/scripts/${transferObj[0].id}` ,{
+            //axios.delete(`http://webdevnotes/admin/scripts/${transferObj[0].id}` ,{
+            axios.delete(route("admin.scripts.destroy",[transferObj[0].id]) ,{
                 //_method: 'delete'
                 headers:{
                         'Content-type':'application/x-www-form-urlencoded'
@@ -247,6 +249,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 /* All devices up to 480px*/
+.card-header{font-size: 12px;}
 .paths-list{
     list-style-type:none;
     .paths_list__item_default{
@@ -368,6 +371,7 @@ export default {
     }
 }
 @media only screen and (min-width: 480px) {
+    .card-header{font-size: 13px;}
     .paths-list{
 
         .paths-list__item{
@@ -447,7 +451,8 @@ export default {
     }
 }
 /* Small devices (landscape phones, 576px and up)*/
-@media only screen and (min-width: 576px) { 
+@media only screen and (min-width: 576px) {
+    .card-header{font-size: 13px;}
     .paths-list{
 
         .paths-list__item{
@@ -528,6 +533,7 @@ export default {
 }
 /* Medium devices (tablets, 768px and up)*/
 @media only screen and (min-width: 768px) {
+    .card-header{font-size: 13px;}
     .paths-list{
 
         .paths-list__item{
@@ -607,7 +613,8 @@ export default {
     }
 }
 /* Large devices (desktops, 992px and up)*/
-@media only screen and (min-width: 992px) { 
+@media only screen and (min-width: 992px) {
+    .card-header{font-size: 14px;}
     .paths-list{
 
         .paths-list__item{
@@ -690,6 +697,7 @@ export default {
 }
 /* Extra large devices (large desktops, 1200px and up)*/
 @media only screen and (min-width: 1200px) {
+    .card-header{font-size: 15px;}
     .paths-list{
         
         .paths-list__item{

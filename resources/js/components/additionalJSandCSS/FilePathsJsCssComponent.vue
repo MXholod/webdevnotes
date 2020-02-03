@@ -1,7 +1,7 @@
 <template>
     <div class="card card-default float-left col-sm-12 col-md-6 col-lg-6 col-xl-6" style="height:200px; background-color: rgba(132,128,238,0.5);">
         <div class="card-header text-center">
-            Server side JS scripts
+            Выбор скриптов
         </div>
         <div class="card-body overflow-auto accept_replace">
             <ul class="paths-list">
@@ -35,6 +35,7 @@
 </template>
 <script>
 import { EventEmitter } from "../../app.js";
+import route from './../../routesExtractFromJson';
 export default {
     props:["files"],
     data() {
@@ -95,7 +96,8 @@ export default {
             //Save Vue context
             let that = this;
             //Call axios method 'post' to call Laravel method 'store' to add new row into DB
-            axios.post('http://webdevnotes/admin/scripts' ,{
+            //axios.post('http://webdevnotes/admin/scripts' ,{
+            axios.post(route("admin.scripts.store") ,{
                 //_method: 'post'
                 headers:{
                     //'Content-type':'multipart/form-data'
@@ -172,11 +174,20 @@ export default {
             let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
             this.liHeight = parseInt(cssPropLiHeight); 
         }
+    },
+    updated(){
+        if(this.$refs.liItem[0]){
+            let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
+            this.liHeight = parseInt(cssPropLiHeight);
+        }else{
+            this.liHeight = 0;
+        }
     }
 }
 </script>
 <style lang="scss" scoped>
 /* All devices up to 480px*/
+.card-header{font-size: 12px;}
 .paths-list{
     list-style-type:none;
     .paths_list__item_default{
@@ -257,7 +268,8 @@ export default {
     }
 }
 /* Extra Small devices (phones, 480px and up)*/
-@media only screen and (min-width: 480px) { 
+@media only screen and (min-width: 480px) {
+    .card-header{font-size: 13px;} 
     .paths-list{
         
         .paths-list__item{
@@ -304,7 +316,8 @@ export default {
     }
 }
 /* Small devices (landscape phones, 576px and up)*/
-@media only screen and (min-width: 576px) { 
+@media only screen and (min-width: 576px) {
+    .card-header{font-size: 13px;}
     .paths-list{
         
         .paths-list__item{
@@ -352,6 +365,7 @@ export default {
 }
 /* Medium devices (tablets, 768px and up)*/
 @media only screen and (min-width: 768px) {
+    .card-header{font-size: 13px;}
     .paths-list{
         
         .paths-list__item{
@@ -399,7 +413,8 @@ export default {
     }
 }
 /* Large devices (desktops, 992px and up)*/
-@media only screen and (min-width: 992px) {  
+@media only screen and (min-width: 992px) {
+    .card-header{font-size: 14px;}
     .paths-list{
         
         .paths-list__item{
@@ -450,6 +465,7 @@ export default {
 }
 /* Extra large devices (large desktops, 1200px and up)*/
 @media only screen and (min-width: 1200px) {
+    .card-header{font-size: 15px;}
     .paths-list{
         
         .paths-list__item{
