@@ -16,7 +16,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
+    @stack('scripts_header')
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -36,5 +36,6 @@
             @yield('content')
         </main>
     </div>
+    @include('layouts.footer')
 </body>
 </html>
