@@ -34,18 +34,18 @@
 <input type="text" class="form-control" id="metaKeywords" name="meta_keywords" placeholder="meta-keywords" 
     value="{{$post->meta_keywords ?? ''}}" required />
 @if(isset($firstFiles) && isset($firstScripts))
-<create-aditional-js-css-component 
+<create-aditional-js-component 
     :file-paths="{{json_encode($firstFiles)}}" 
     :db-paths="{{json_encode($firstScripts)}}"
     >
-</create-aditional-js-css-component>
+</create-aditional-js-component>
 @endif
 @if(isset($files) && isset($activeScripts))
-<aditional-js-css-component 
+<aditional-js-component 
     :file-paths="{{json_encode($files)}}" 
     :db-paths="{{json_encode($activeScripts)}}"
     >
-</aditional-js-css-component>
+</aditional-js-component>
 @endif
 <label for="description">Краткое описание статьи</label>
 <textarea cols="20" rows="2" id="description" name="description" style="width:100%">

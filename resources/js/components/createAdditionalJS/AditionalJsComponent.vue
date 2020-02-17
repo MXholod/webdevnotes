@@ -14,8 +14,8 @@
     </div>
 </template>
 <script>
-import FilePathsComponent from "./FilePathsJsCssComponent.vue";
-import DbPathsComponent from "./DbPathsJsCssComponent.vue";
+import FilePathsComponent from "./FilePathsJsComponent.vue";
+import DbPathsComponent from "./DbPathsJsComponent.vue";
     export default {
         props:["filePaths","dbPaths"],
         components:{

@@ -23,8 +23,8 @@ window.axios = require('axios');
 export const EventEmitter = new Vue();
 export const EventEmitterCreate = new Vue();
 
-Vue.component('aditional-js-css-component', require('./components/additionalJSandCSS/AditionalJsCssComponent.vue').default);
-Vue.component('create-aditional-js-css-component', require('./components/createAdditionalJSandCSS/AditionalJsCssComponent.vue').default);
+Vue.component('aditional-js-component', require('./components/additionalJS/AditionalJsComponent.vue').default);
+Vue.component('create-aditional-js-component', require('./components/createAdditionalJS/AditionalJsComponent.vue').default);
 
 const app = new Vue({
     el: '#app'
