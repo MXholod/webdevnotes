@@ -90,9 +90,16 @@ class WDCategoryController extends WDBlogBaseController
      */
     public function edit($id)
     {
+        //We've got the whole list of file paths
+        $files = $this->getAllFiles("js/additional_js");
+        //Model name    
+        $model = "Webdev\Models\BlogwdCategory";
         $category = BlogwdCategory::find($id);
         //Отвечает за открытие формы обновления
         return view('admin.categories.edit',[
+            // ’files’ и  'activeScripts' – данные для Vue компонентов
+            'files'=>$this->getUnlikeDBPaths($files,$category->scripts,$id,$model),
+            'activeScripts'=>$this->getDbPreparedData($category->scripts),
             'category' => $category,
             'categories' => BlogwdCategory::with('children')->where('parent_id','0')->get(),
             'delimiter' => ''
@@ -119,6 +126,15 @@ class WDCategoryController extends WDBlogBaseController
             $category->description = $request->get('description');
             $category->parent_id = $request->get('parent_id');
         $category->save();
+        //Update header_or_footer field in table 'blogwd_scripts'.
+        $scripts_h_f = $this->updateScripts($request);
+           if(count($scripts_h_f) > 0){
+               for($j=0;$j<count($scripts_h_f);$j++){
+                   \Webdev\Models\BlogwdScript::where('id',$scripts_h_f[$j]['id'])
+                           ->where('scriptable_id',$id)
+                           ->update($scripts_h_f[$j]);
+                 }
+           }
         return redirect()->route('admin.category.index');
     }
 
