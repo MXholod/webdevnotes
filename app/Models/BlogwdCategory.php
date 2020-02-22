@@ -41,4 +41,8 @@ class BlogwdCategory extends Model
     public function scopeIsPublished($query){
         return $query->where('published',1);
     }
+    //Set relation with Model 'BlogwdScript' and table 'blogwd_scripts'
+    public function scripts(){
+        return $this->morphMany('Webdev\Models\BlogwdScript', 'scriptable');
+    }
 }

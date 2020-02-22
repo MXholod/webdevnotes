@@ -5,6 +5,7 @@ namespace Webdev\Http\Controllers\Admin;
 use Webdev\Models\BlogwdCategory;
 use Illuminate\Http\Request;
 use Webdev\Http\Controllers\Admin\WDBlogBaseController;
+use DB;
 //use Webdev\Http\Controllers\Controller;
 
 class WDCategoryController extends WDBlogBaseController
@@ -33,8 +34,14 @@ class WDCategoryController extends WDBlogBaseController
      */
     public function create()
     {
+        //We've got the whole list of file paths
+        $files = $this->getAllFiles("js/additional_js");
+        //Model name    
+        $model = "Webdev\Models\BlogwdCategory";
         //Отвечает за открытие формы создания Категории
         return view('admin.categories.create',[
+            'firstFiles'=>$this->prepareFilesBeforeCreate($files,0,$model),
+            'firstScripts'=>array(),
             'category' => [],
             'categories' => BlogwdCategory::with('children')->where('parent_id','0')->get(),
             'delimiter' => ''
@@ -50,8 +57,17 @@ class WDCategoryController extends WDBlogBaseController
     public function store(Request $request)
     {
         //Отвечает за создание записи в таблице
-        //Method create() is for bulk filling
-        BlogwdCategory::create($request->all());
+        //Model name    
+        $model = "Webdev\Models\BlogwdCategory";
+        $category = BlogwdCategory::create($request->all());
+        //Get current resource ID from '$post->id'. It is needed for 'blogwd_scripts' table
+        $arrayToInsert = $this->insertPathsWhenCreated($request->paths, $request->dbscripts, $category->id, $model);
+        //If array isn't empty. It means JS file/s was/were added to a resource.
+        if(!empty($arrayToInsert)){
+            //Multiple inserts or one insert it depends on incomind data
+            DB::table('blogwd_scripts')->insert($arrayToInsert);
+        }
+        //BlogwdCategory::create($request->all());
         return redirect()->route('admin.category.index');
     }
 

@@ -40,6 +40,21 @@
     @include('admin.categories.partitions.nested_categories', ['categories'=>$categories])
 </select>
 
+@if(isset($firstFiles) && isset($firstScripts))
+<create-aditional-js-component 
+    :file-paths="{{json_encode($firstFiles)}}" 
+    :db-paths="{{json_encode($firstScripts)}}"
+    >
+</create-aditional-js-component>
+@endif
+@if(isset($files) && isset($activeScripts))
+<aditional-js-component 
+    :file-paths="{{json_encode($files)}}" 
+    :db-paths="{{json_encode($activeScripts)}}"
+    >
+</aditional-js-component>
+@endif
+
 <label>
     <input type="submit" class="btn btn-primary" value="Сохранить" />
 </label>
