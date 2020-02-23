@@ -149,6 +149,7 @@ class WDCategoryController extends WDBlogBaseController
         //Отвечает за удаление
         $category = BlogwdCategory::findOrFail($id);
         $category->delete();
+        DB::table('blogwd_scripts')->where('scriptable_id', '=', $id)->delete();
         return redirect()->route('admin.category.index');
     }
 }
