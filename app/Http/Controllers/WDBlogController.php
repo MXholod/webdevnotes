@@ -10,7 +10,17 @@ class WDBlogController extends Controller
     //
     public function category($slug){
         $category = BlogwdCategory::where('slug','=',$slug)->first();
+        $scripts = [];
+        //Sorts all the bound files and put them in two arrays 'header' and 'footer'
+        foreach($category->scripts as $script){
+            if($script->header_or_footer == 0){
+                $scripts['header'][] = $script->path_js;
+            }else{
+                $scripts['footer'][] = $script->path_js;
+            }
+        }
         return view('blogwd.category',[
+            'scripts' => $scripts,
             'category' => $category,
             'posts' => $category->posts()->where('published',1)->paginate(7) 
         ]);

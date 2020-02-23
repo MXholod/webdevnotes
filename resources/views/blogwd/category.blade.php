@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+@isset($scripts['header'])
+    @foreach($scripts['header'] as $script)
+        @push('scripts_header')
+            <script src="{{ asset($script) }}" defer></script>
+        @endpush
+    @endforeach
+@endisset
+@isset($scripts['footer'])
+    @foreach($scripts['footer'] as $script)
+        @push('scripts_footer')
+            <script src="{{ asset($script) }}"></script>
+        @endpush
+    @endforeach
+@endisset
 @section('title', $category->title)
 @section('meta_description') {{$category->meta_description}} @endsection
 @section('meta_keywords') {{$category->meta_keywords}} @endsection
