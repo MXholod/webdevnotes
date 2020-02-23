@@ -55,10 +55,16 @@
                     <input type="text" class="form-control" id="metaKeywords" name="meta_keywords" placeholder="meta-keywords" 
                         value="{{$stPage->meta_keywords ?? ''}}" required />
 
-                    <label for="metaKeywords">path</label>
-                    <input type="text" class="form-control" id="metaKeywords" name="meta_keywords" placeholder="meta-keywords" 
+                    <label for="path">path</label>
+                    <input type="text" class="form-control" id="path" name="path" placeholder="path" 
                         value="{{$stPage->path ?? ''}}" required disabled />
-
+                    @if(isset($files) && isset($activeScripts))
+                        <aditional-js-component 
+                            :file-paths="{{json_encode($files)}}" 
+                            :db-paths="{{json_encode($activeScripts)}}"
+                        >
+                        </aditional-js-component>
+                    @endif
                     <label for="description">Краткое описание страницы</label>
                     <textarea cols="20" rows="2" id="description" name="description" style="width:100%">
                         {{$stPage->description ?? ''}}

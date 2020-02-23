@@ -63,8 +63,17 @@ class WDStaticPageController extends WDBlogBaseController
      */
     public function edit($id)
     {
+        //We've got the whole list of file paths
+        $files = $this->getAllFiles("js/additional_js");
+        //
         $stPage = BlogwdStaticPage::find($id);
+        //Model name    
+        $model = "Webdev\Models\BlogwdStaticPage";
+        
         return view('admin.static-pages.edit',[
+            // ’files’ и  'activeScripts' – данные для Vue компонентов
+            'files'=>$this->getUnlikeDBPaths($files,$stPage->scripts,$id,$model),
+            'activeScripts'=>$this->getDbPreparedData($stPage->scripts),
             'stPage' => $stPage
         ]);
         
@@ -95,6 +104,15 @@ class WDStaticPageController extends WDBlogBaseController
             $stPage->description = $request->get('description');
             $stPage->full_text = $request->get('full_text');
         $stPage->save();
+        //Update header_or_footer field in table 'blogwd_scripts'.
+        $scripts_h_f = $this->updateScripts($request);
+           if(count($scripts_h_f) > 0){
+               for($j=0;$j<count($scripts_h_f);$j++){
+                   \Webdev\Models\BlogwdScript::where('id',$scripts_h_f[$j]['id'])
+                        ->where('scriptable_id',$id)
+                        ->update($scripts_h_f[$j]);
+                 }
+           }
         return redirect()->route('admin.static-page.index');
     }
 
