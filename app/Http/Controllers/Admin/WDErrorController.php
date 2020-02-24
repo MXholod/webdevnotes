@@ -65,7 +65,7 @@ class WDErrorController extends WDBlogBaseController
         //We've got the whole list of file paths
         $files = $this->getAllFiles("js/additional_js");
         //Model name    
-        $model = "Webdev\Models\BlogwdStaticPage";
+        $model = "Webdev\Models\BlogwdErrorPage";
         $erPage = BlogwdErrorPage::find($id);
          return view('admin.error-pages.edit',[
             // ’files’ и  'activeScripts' – данные для Vue компонентов
@@ -101,6 +101,15 @@ class WDErrorController extends WDBlogBaseController
             $stPage->description = $request->get('description');
             $stPage->full_text = $request->get('full_text');
         $stPage->save();
+        //Update header_or_footer field in table 'blogwd_scripts'.
+        $scripts_h_f = $this->updateScripts($request);
+           if(count($scripts_h_f) > 0){
+               for($j=0;$j<count($scripts_h_f);$j++){
+                   \Webdev\Models\BlogwdScript::where('id',$scripts_h_f[$j]['id'])
+                        ->where('scriptable_id',$id)
+                        ->update($scripts_h_f[$j]);
+                 }
+           }
         return redirect()->route('admin.error-page.index');
     }
 
