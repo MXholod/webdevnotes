@@ -62,9 +62,15 @@ class WDErrorController extends WDBlogBaseController
      */
     public function edit($id)
     {
-        //
+        //We've got the whole list of file paths
+        $files = $this->getAllFiles("js/additional_js");
+        //Model name    
+        $model = "Webdev\Models\BlogwdStaticPage";
         $erPage = BlogwdErrorPage::find($id);
          return view('admin.error-pages.edit',[
+            // ’files’ и  'activeScripts' – данные для Vue компонентов
+            'files'=>$this->getUnlikeDBPaths($files,$erPage->scripts,$id,$model),
+            'activeScripts'=>$this->getDbPreparedData($erPage->scripts),
             'errorPage'=> $erPage
         ]);
     }
