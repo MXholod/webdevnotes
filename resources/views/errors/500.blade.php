@@ -4,6 +4,20 @@
 @section('meta_description'){{ $meta_description ?? "Error 500"}} @endsection
 @section('meta_keywords'){{ $meta_keywords ?? "Error 500"}} @endsection
 
+@isset($scripts['header'])
+    @foreach($scripts['header'] as $script)
+        @push('scripts_header')
+            <script src="{{ asset($script) }}" defer></script>
+        @endpush
+    @endforeach
+@endisset
+@isset($scripts['footer'])
+    @foreach($scripts['footer'] as $script)
+        @push('scripts_footer')
+            <script src="{{ asset($script) }}"></script>
+        @endpush
+    @endforeach
+@endisset
 @section('content')
     <div class="container">
         <div class="row">

@@ -56,6 +56,15 @@ class Handler extends ExceptionHandler
             if(view()->exists($view)) {
                 //Get the page data
                 $page = BlogwdErrorPage::isPublished()->where("path",$pageName)->first();
+                $scripts = [];
+                //Sorts all the bound files and put them in two arrays 'header' and 'footer'
+                foreach($page->scripts as $script){
+                    if($script->header_or_footer == 0){
+                        $scripts['header'][] = $script->path_js;
+                    }else{
+                        $scripts['footer'][] = $script->path_js;
+                    }
+                }
                 if(!is_null($page)){
                     //Return data
                     return response()->view($view, [
@@ -66,6 +75,7 @@ class Handler extends ExceptionHandler
                         'full_text'=>$page->full_text,
                         'status'=>$exception->getStatusCode(),
                         'exception' => $exception,
+                        'scripts' => $scripts
                     ], $exception->getStatusCode());
                 }else{
                     return parent::render($request, $exception);
