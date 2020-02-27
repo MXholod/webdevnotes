@@ -23,6 +23,7 @@ Route::group([
         Route::resource('/static-page','WDStaticPageController',['as'=>'admin']);
         Route::resource('/error-page','WDErrorController',['as'=>'admin']);
         Route::resource('/scripts','WDBlogScriptController',['as'=>'admin']);
+        Route::resource('/styles','WDBlogStyleController',['as'=>'admin']);
         Route::group([
             // Full prefix is - admin/user_managment - because user_managment is nested.
             'prefix'=>'user_managment',
