@@ -144,7 +144,7 @@ class WDBlogBaseController extends Controller
         $allPathsInDb = array();
         //Prepare array from Model class for array_diff() function
         foreach($arrDBPaths as $dbpath){
-            $allPathsInDb[] = $dbpath->path_js;
+            $allPathsInDb[] = $dbpath->path_js ?? $dbpath->path_css;
         }
         //Get only unique paths for file paths block
         $pathsAreNotInDb = array_diff($arrFilePaths,$allPathsInDb);
@@ -167,14 +167,20 @@ class WDBlogBaseController extends Controller
      * @param  $arrDBPaths - Rows from the DB Table according to the current Model
      * @return array
      */
-    protected function getDbPreparedData($arrDBPaths){
+    protected function getDbPreparedData($arrDBPaths,$type=""){
         $allPathsInDb = array();$i=0;
         foreach($arrDBPaths as $dbDataRow){
             $allPathsInDb[$i]['id'] = $dbDataRow->id;
-            $allPathsInDb[$i]['path_js'] = $dbDataRow->path_js;
-            $allPathsInDb[$i]['header_or_footer'] = $dbDataRow->header_or_footer;
-            $allPathsInDb[$i]['scriptable_id'] = $dbDataRow->scriptable_id;
-            $allPathsInDb[$i]['scriptable_type'] = $dbDataRow->scriptable_type;
+            if($type == ""){//JS by default
+                $allPathsInDb[$i]['path_js'] = $dbDataRow->path_js;
+                $allPathsInDb[$i]['header_or_footer'] = $dbDataRow->header_or_footer;
+                $allPathsInDb[$i]['scriptable_id'] = $dbDataRow->scriptable_id;
+                $allPathsInDb[$i]['scriptable_type'] = $dbDataRow->scriptable_type;
+            }else if($type == "css"){//CSS
+                $allPathsInDb[$i]['path_css'] = $dbDataRow->path_css;
+                $allPathsInDb[$i]['styleable_id'] = $dbDataRow->styleable_id;
+                $allPathsInDb[$i]['styleable_type'] = $dbDataRow->styleable_type;
+            }
             $i++;
         }
         return $allPathsInDb;
