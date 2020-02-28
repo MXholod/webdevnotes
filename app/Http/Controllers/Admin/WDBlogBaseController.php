@@ -72,24 +72,38 @@ class WDBlogBaseController extends Controller
      * @param $model - the Model that is using in the Controller 
      * @return array [] of prepared data before insert, or array of arrays [[],[],[]]
      */
-    protected function insertPathsWhenCreated($paths,$h_f,$idResource,$model){
+    protected function insertPathsWhenCreated($paths,$h_f = array(),$idResource,$model,$type=""){
         $result_arr = array();
         if(empty($paths)){
             return $result_arr;
         }
         //If only one insert
         if(count($paths) == 1){
-            $result_arr['path_js'] = $paths[0];
-            $result_arr['header_or_footer'] = $h_f[0];
-            $result_arr['scriptable_id'] = $idResource;
-            $result_arr['scriptable_type'] = $model;
+            if($type == ""){//JS by default
+                $result_arr['path_js'] = $paths[0];
+                $result_arr['header_or_footer'] = $h_f[0];
+                $result_arr['scriptable_id'] = $idResource;
+                $result_arr['scriptable_type'] = $model;
+            }
+            else if($type == "css"){//CSS
+                $result_arr['path_css'] = $paths[0];
+                $result_arr['styleable_id'] = $idResource;
+                $result_arr['styleable_type'] = $model;
+            }
         }else{//If multiple inserts
             $each_insert = array();
             for($i = 0;count($paths) > $i; $i++){
-                $each_insert['path_js'] = $paths[$i];
-                $each_insert['header_or_footer'] = $h_f[$i];
-                $each_insert['scriptable_id'] = $idResource;
-                $each_insert['scriptable_type'] = $model;
+                if($type == ""){//JS by default
+                    $each_insert['path_js'] = $paths[$i];
+                    $each_insert['header_or_footer'] = $h_f[$i];
+                    $each_insert['scriptable_id'] = $idResource;
+                    $each_insert['scriptable_type'] = $model;
+                }
+                else if($type == "css"){//CSS
+                    $each_insert['path_css'] = $paths[$i];
+                    $each_insert['styleable_id'] = $idResource;
+                    $each_insert['styleable_type'] = $model;
+                }
                 $result_arr[$i] = $each_insert; 
             }
         }
