@@ -34,7 +34,9 @@ class WDCategoryController extends WDBlogBaseController
      */
     public function create()
     {
-        //We've got the whole list of file paths
+        //We've got the whole list of CSS file paths
+        $filesCss = $this->getAllFiles("css/additional_css");
+        //We've got the whole list of JS file paths
         $files = $this->getAllFiles("js/additional_js");
         //Model name    
         $model = "Webdev\Models\BlogwdCategory";
@@ -42,6 +44,8 @@ class WDCategoryController extends WDBlogBaseController
         return view('admin.categories.create',[
             'firstFiles'=>$this->prepareFilesBeforeCreate($files,0,$model),
             'firstScripts'=>array(),
+            'firstCssFiles'=>$this->prepareFilesBeforeCreate($filesCss,0,$model),
+            'firstCss'=>array(),
             'category' => [],
             'categories' => BlogwdCategory::with('children')->where('parent_id','0')->get(),
             'delimiter' => ''
@@ -66,6 +70,15 @@ class WDCategoryController extends WDBlogBaseController
         if(!empty($arrayToInsert)){
             //Multiple inserts or one insert it depends on incomind data
             DB::table('blogwd_scripts')->insert($arrayToInsert);
+        }
+        
+        //Get current resource ID from '$post->id'. It is needed for 'blogwd_styles' table
+        $arrayToInsertCss = $this->insertPathsWhenCreated($request->pathsCss, $request->dbscripts, $category->id, $model, "css");
+        //dd($arrayToInsertCss);
+        //If array isn't empty. It means JS file/s was/were added to a resource.
+        if(!empty($arrayToInsertCss)){
+            //Multiple inserts or one insert it depends on incomind data
+            DB::table('blogwd_styles')->insert($arrayToInsertCss);
         }
         //BlogwdCategory::create($request->all());
         return redirect()->route('admin.category.index');

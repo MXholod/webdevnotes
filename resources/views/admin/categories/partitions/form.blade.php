@@ -54,7 +54,13 @@
     >
 </aditional-js-component>
 @endif
-
+@if(isset($firstCssFiles) && isset($firstCss))
+<create-additional-css-component 
+    :file-paths="{{json_encode($firstCssFiles)}}" 
+    :db-paths="{{json_encode($firstCss)}}"
+    >
+</create-additional-css-component>
+@endif
 <label>
     <input type="submit" class="btn btn-primary" value="Сохранить" />
 </label>
