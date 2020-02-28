@@ -22,9 +22,13 @@ window.axios = require('axios');
 
 export const EventEmitter = new Vue();
 export const EventEmitterCreate = new Vue();
+export const EventEmitterCss = new Vue();
+export const EventEmitterCreateCss = new Vue();
 
 Vue.component('aditional-js-component', require('./components/additionalJS/AditionalJsComponent.vue').default);
 Vue.component('create-aditional-js-component', require('./components/createAdditionalJS/AditionalJsComponent.vue').default);
+Vue.component('additional-css-component', require('./components/additionalCSS/AdditionalCssComponent.vue').default);
+Vue.component('create-additional-css-component', require('./components/createAdditionalCSS/AdditionalCssComponent.vue').default);
 
 const app = new Vue({
     el: '#app'
