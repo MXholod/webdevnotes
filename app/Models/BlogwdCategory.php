@@ -8,7 +8,17 @@ use Illuminate\Support\Str;
 class BlogwdCategory extends Model
 {
     //White list - for recording
-    protected $fillable = ['title','description','slug','parent_id','published','created_by','modified_by'];
+    protected $fillable = [
+        'title',
+        'description',
+        'slug',
+        'parent_id',
+        'published',
+        'meta_description',
+        'meta_keywords',
+        'created_by',
+        'modified_by'
+    ];
     
     //Mutators prepare field's value before save into DB 
     //Here we create 'slug' from 'title' automatically
@@ -44,5 +54,9 @@ class BlogwdCategory extends Model
     //Set relation with Model 'BlogwdScript' and table 'blogwd_scripts'
     public function scripts(){
         return $this->morphMany('Webdev\Models\BlogwdScript', 'scriptable');
+    }
+    //Set relation with Model 'BlogwdScript' and table 'blogwd_scripts'
+    public function styles(){
+        return $this->morphMany('Webdev\Models\BlogwdStyle', 'styleable');
     }
 }
