@@ -5,6 +5,8 @@ namespace Webdev\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Webdev\Http\Controllers\Controller;
 
+use DB;
+
 class WDBlogStyleController extends Controller
 {
     /**
@@ -34,8 +36,24 @@ class WDBlogStyleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {//dd(json_decode($request->input('body')));
         //
+        //Check method
+        if($request->isMethod('post')){
+            //Get item to transfer data into the DB
+            $itemObject = json_decode($request->input('body'));
+            //Prepare data before insert
+            $data = [
+                'path_css'=>$itemObject->path,
+                'styleable_id'=>$itemObject->model_id,
+                'styleable_type'=>$itemObject->model
+            ];
+            //Get the last id
+            $lastId = DB::table("blogwd_styles")->insertGetId($data);
+            return response()->json(['id' => $lastId]);
+        }else{
+            return json_encode(['method' => 'Unknown']);
+        }
     }
 
     /**
@@ -80,6 +98,8 @@ class WDBlogStyleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Delete table row by ID
+        $id = DB::table("blogwd_styles")->where('id', '=', $id)->delete();
+        return json_encode(["id"=>$id]);
     }
 }
