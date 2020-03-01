@@ -31,6 +31,8 @@ class WDPostController extends WDBlogBaseController
      */
     public function create()
     {
+        //We've got the whole list of CSS file paths
+        $filesCss = $this->getAllFiles("css/additional_css");
         //We've got the whole list of file paths
         $files = $this->getAllFiles("js/additional_js");
         //Model name    
@@ -38,6 +40,8 @@ class WDPostController extends WDBlogBaseController
         return view('admin.posts.create',[
             'firstFiles'=>$this->prepareFilesBeforeCreate($files,0,$model),
             'firstScripts'=>array(),
+            'firstCssFiles'=>$this->prepareFilesBeforeCreate($filesCss,0,$model),
+            'firstCss'=>array(),
             'post'=> [],
             'categories'=> BlogwdCategory::with('children')->where('parent_id',0)->get(),
             'delimiter'=> ''
@@ -61,6 +65,13 @@ class WDPostController extends WDBlogBaseController
         if(!empty($arraToInsert)){
             //Multiple inserts or one insert it depends on incomind data
             DB::table('blogwd_scripts')->insert($arraToInsert);
+        }
+        //Get current resource ID from '$post->id'. It is needed for 'blogwd_styles' table
+        $arrayToInsertCss = $this->insertPathsWhenCreated($request->pathsCss, array(), $post->id, $model, "css");
+        //If array isn't empty. It means JS file/s was/were added to a resource.
+        if(!empty($arrayToInsertCss)){
+            //Multiple inserts or one insert it depends on incomind data
+            DB::table('blogwd_styles')->insert($arrayToInsertCss);
         }
         //Categories
         if($request->input('categories')){
@@ -90,17 +101,21 @@ class WDPostController extends WDBlogBaseController
     public function edit($id)
     {
         //We've got the whole list of file paths
+        $filesCss = $this->getAllFiles("css/additional_css");
+        //We've got the whole list of file paths
         $files = $this->getAllFiles("js/additional_js");
         //
         $post = BlogwdPost::find($id);
         
         //Model name    
         $model = "Webdev\Models\BlogwdPost";
-        //dd($this->getUnlikeDBPaths($files,$post->scripts,$id,$model));
         return view('admin.posts.edit',[
             // ’files’ и  'activeScripts' – данные для Vue компонентов
             'files'=>$this->getUnlikeDBPaths($files,$post->scripts,$id,$model),
             'activeScripts'=>$this->getDbPreparedData($post->scripts),
+            // ’filesCss’ и  'activeCss' – данные для Vue компонентов
+            'filesCss'=>$this->getUnlikeDBPaths($filesCss,$post->styles,$id,$model),
+            'activeCss'=>$this->getDbPreparedData($post->styles,"css"),
             'post' => $post,
             'categories'=> BlogwdCategory::with('children')->where('parent_id',0)->get(),
             'delimiter'=> ''
@@ -163,6 +178,7 @@ class WDPostController extends WDBlogBaseController
         //Delete current Post
         $post->delete();
         DB::table('blogwd_scripts')->where('scriptable_id', '=', $id)->delete();
+        DB::table('blogwd_styles')->where('styleable_id', '=', $id)->delete();
         return redirect()->route('admin.post.index');
     }
 }

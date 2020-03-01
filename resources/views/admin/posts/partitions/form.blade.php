@@ -47,6 +47,20 @@
     >
 </aditional-js-component>
 @endif
+@if(isset($firstCssFiles) && isset($firstCss))
+<create-additional-css-component 
+    :file-paths="{{json_encode($firstCssFiles)}}" 
+    :db-paths="{{json_encode($firstCss)}}"
+    >
+</create-additional-css-component>
+@endif
+@if(isset($filesCss) && isset($activeCss))
+<additional-css-component 
+    :file-paths="{{json_encode($filesCss)}}" 
+    :db-paths="{{json_encode($activeCss)}}"
+    >
+</additional-css-component>
+@endif
 <label for="description">Краткое описание статьи</label>
 <textarea cols="20" rows="2" id="description" name="description" style="width:100%">
     {{$post->description ?? ''}}

@@ -40,4 +40,8 @@ class BlogwdPost extends Model
     public function scripts(){
         return $this->morphMany('Webdev\Models\BlogwdScript', 'scriptable');
     }
+    //Set relation with Model 'BlogwdScript' and table 'blogwd_scripts'
+    public function styles(){
+        return $this->morphMany('Webdev\Models\BlogwdStyle', 'styleable');
+    }
 }
