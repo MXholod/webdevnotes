@@ -71,10 +71,8 @@ class WDCategoryController extends WDBlogBaseController
             //Multiple inserts or one insert it depends on incomind data
             DB::table('blogwd_scripts')->insert($arrayToInsert);
         }
-        
         //Get current resource ID from '$post->id'. It is needed for 'blogwd_styles' table
         $arrayToInsertCss = $this->insertPathsWhenCreated($request->pathsCss, $request->dbscripts, $category->id, $model, "css");
-        //dd($arrayToInsertCss);
         //If array isn't empty. It means JS file/s was/were added to a resource.
         if(!empty($arrayToInsertCss)){
             //Multiple inserts or one insert it depends on incomind data
@@ -105,6 +103,8 @@ class WDCategoryController extends WDBlogBaseController
     {
         //We've got the whole list of file paths
         $files = $this->getAllFiles("js/additional_js");
+        //We've got the whole list of file paths
+        $filesCss = $this->getAllFiles("css/additional_css");
         //Model name    
         $model = "Webdev\Models\BlogwdCategory";
         $category = BlogwdCategory::find($id);
@@ -113,6 +113,9 @@ class WDCategoryController extends WDBlogBaseController
             // ’files’ и  'activeScripts' – данные для Vue компонентов
             'files'=>$this->getUnlikeDBPaths($files,$category->scripts,$id,$model),
             'activeScripts'=>$this->getDbPreparedData($category->scripts),
+            // ’filesCss’ и  'activeCss' – данные для Vue компонентов
+            'filesCss'=>$this->getUnlikeDBPaths($filesCss,$category->styles,$id,$model),
+            'activeCss'=>$this->getDbPreparedData($category->styles,"css"),
             'category' => $category,
             'categories' => BlogwdCategory::with('children')->where('parent_id','0')->get(),
             'delimiter' => ''
@@ -163,6 +166,7 @@ class WDCategoryController extends WDBlogBaseController
         $category = BlogwdCategory::findOrFail($id);
         $category->delete();
         DB::table('blogwd_scripts')->where('scriptable_id', '=', $id)->delete();
+        DB::table('blogwd_styles')->where('styleable_id', '=', $id)->delete();
         return redirect()->route('admin.category.index');
     }
 }

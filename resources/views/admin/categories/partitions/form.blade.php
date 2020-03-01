@@ -18,11 +18,11 @@
     value="{{$category->title ?? ''}}" required />
 
 <label for="m-desc">meta_description</label>
-<input type="text" class="form-control" id="m-desc" name="meta_d" placeholder="Meta описание" 
+<input type="text" class="form-control" id="m-desc" name="meta_description" placeholder="Meta описание" 
     value="{{$category->meta_description ?? ''}}" />
 
 <label for="m-key">meta-keywords</label>
-<input type="text" class="form-control" id="m-key" name="meta_k" placeholder="Meta слова" 
+<input type="text" class="form-control" id="m-key" name="meta_keywords" placeholder="Meta слова" 
     value="{{$category->meta_keywords ?? ''}}" />
 
 <label for="descriptionCat">Описание категории</label>
@@ -33,6 +33,8 @@
 <label for="slug">Slug</label>
 <input type="text" class="form-control" id="slug" name="slug" placeholder="Автоматическая генерация" 
     value="{{$category->slug ?? ''}}" readonly />
+
+<input type="hidden" name="created_by" value="{{auth()->user()->id ?? ''}}" />
 
 <label for="parentCat">Родительская категория</label>
 <select class="form-control" id="parentCat" name="parent_id">
@@ -60,6 +62,13 @@
     :db-paths="{{json_encode($firstCss)}}"
     >
 </create-additional-css-component>
+@endif
+@if(isset($filesCss) && isset($activeCss))
+<additional-css-component 
+    :file-paths="{{json_encode($filesCss)}}" 
+    :db-paths="{{json_encode($activeCss)}}"
+    >
+</additional-css-component>
 @endif
 <label>
     <input type="submit" class="btn btn-primary" value="Сохранить" />
