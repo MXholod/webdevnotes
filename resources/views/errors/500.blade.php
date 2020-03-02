@@ -4,6 +4,13 @@
 @section('meta_description'){{ $meta_description ?? "Error 500"}} @endsection
 @section('meta_keywords'){{ $meta_keywords ?? "Error 500"}} @endsection
 
+@isset($styles)
+    @foreach($styles as $style)
+        @push('styles_header')
+            <link href="{{ asset($style) }}" type="text/css" rel="stylesheet" />
+        @endpush
+    @endforeach
+@endisset
 @isset($scripts['header'])
     @foreach($scripts['header'] as $script)
         @push('scripts_header')
