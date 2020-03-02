@@ -63,6 +63,8 @@ class WDErrorController extends WDBlogBaseController
     public function edit($id)
     {
         //We've got the whole list of file paths
+        $filesCss = $this->getAllFiles("css/additional_css");
+        //We've got the whole list of file paths
         $files = $this->getAllFiles("js/additional_js");
         //Model name    
         $model = "Webdev\Models\BlogwdErrorPage";
@@ -71,6 +73,9 @@ class WDErrorController extends WDBlogBaseController
             // ’files’ и  'activeScripts' – данные для Vue компонентов
             'files'=>$this->getUnlikeDBPaths($files,$erPage->scripts,$id,$model),
             'activeScripts'=>$this->getDbPreparedData($erPage->scripts),
+             // ’filesCss’ и  'activeCss' – данные для Vue компонентов
+            'filesCss'=>$this->getUnlikeDBPaths($filesCss,$erPage->styles,$id,$model),
+            'activeCss'=>$this->getDbPreparedData($erPage->styles,"css"),
             'errorPage'=> $erPage
         ]);
     }
