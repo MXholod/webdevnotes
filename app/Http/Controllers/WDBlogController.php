@@ -37,6 +37,13 @@ class WDBlogController extends Controller
     public function post($slug){
         //Get Post by 'slug'
         $postData = BlogwdPost::where('slug','=',$slug)->first();
+        //Styles by default
+        $styles = [];
+        //Sort all the bound CSS files for this page
+        foreach($postData->styles as $style){
+            $styles[] = $style->path_css;
+        }
+        //Scripts by default
         $scripts = [];
         //Sorts all the bound files and put them in two arrays 'header' and 'footer'
         foreach($postData->scripts as $script){
@@ -47,6 +54,7 @@ class WDBlogController extends Controller
             }
         }
         return view('blogwd.post',[
+            'styles' => $styles,
             'scripts' => $scripts,
             'post' => $postData //BlogwdPost::where('slug','=',$slug)->first() 
         ]);
