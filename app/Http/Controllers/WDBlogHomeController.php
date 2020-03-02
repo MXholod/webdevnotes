@@ -27,8 +27,15 @@ class WDBlogHomeController extends WDBlogBaseController
     {
         //Get data for this page according to the request
         $pageData = $this->getStaticPageData($request);
+        //Styles by default
+        $styles = [];
+        //Sort all the bound CSS files for this page
+        foreach($pageData->styles as $style){
+            $styles[] = $style->path_css;
+        }
+        //Scripts by default
         $scripts = [];
-        //Sorts all the bound files and put them in two arrays 'header' and 'footer'
+        //Sorts all the bound JS files and put them in two arrays 'header' and 'footer'
         foreach($pageData->scripts as $script){
             if($script->header_or_footer == 0){
                 $scripts['header'][] = $script->path_js;
@@ -40,6 +47,7 @@ class WDBlogHomeController extends WDBlogBaseController
         if(!is_null($pageData)){
             //Apply the data to the View
             return view('blogwd.home', [
+                'styles' => $styles,
                 'scripts' => $scripts,
                 'pageData' => $pageData
             ]);
