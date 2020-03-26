@@ -22,7 +22,8 @@
                         <th>Наименование</th>
                         <th>Описание категории</th>
                         <th>Публикация</th>
-                        <th colspan="2" class="text-right">Действие</th>
+                        <th>Удалить</th>
+                        <th class="text-right">Редактировать</th>
                     </thead>
                     <tbody>
                         @forelse($categories as $category)
@@ -49,7 +50,7 @@
                                     </form>
                                     @endcan
                                 </td>    
-                                <td>    
+                                <td style="padding-left:60px;">    
                                     <a href="{{route('admin.category.edit', $category)}}">
                                         <i class="fa fa-edit"></i>
                                         {{ $category->published }}
