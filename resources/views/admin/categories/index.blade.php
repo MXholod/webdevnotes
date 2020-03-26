@@ -22,7 +22,7 @@
                         <th>Наименование</th>
                         <th>Описание категории</th>
                         <th>Публикация</th>
-                        <th class="text-right">Действие</th>
+                        <th colspan="2" class="text-right">Действие</th>
                     </thead>
                     <tbody>
                         @forelse($categories as $category)
@@ -31,6 +31,7 @@
                                 <td>{{ $category->description ?? "Описание отсутствует" }}</td>
                                 <td>{{ $category->published }}</td>
                                 <td>
+                                    @can('delete',$category)
                                     <form style="display:inline-block;"
                                         onsubmit="if(confirm('Want to delete?')){
                                             return true;
@@ -46,6 +47,9 @@
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
+                                    @endcan
+                                </td>    
+                                <td>    
                                     <a href="{{route('admin.category.edit', $category)}}">
                                         <i class="fa fa-edit"></i>
                                         {{ $category->published }}
@@ -54,7 +58,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center">
+                                <td colspan="5" class="text-center">
                                     <h2>Категории отсутствуют</h2>
                                 </td>
                             </tr>
@@ -62,7 +66,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="4" class="text-center">
+                            <td colspan="5" class="text-center">
                                 <ul class="pagination pull-right">
                                     <li>{{$categories->links()}}</li>
                                 </ul>
