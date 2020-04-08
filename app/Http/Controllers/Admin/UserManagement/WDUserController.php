@@ -16,8 +16,27 @@ class WDUserController extends Controller
     public function index()
     {
         //
+        $roles = [];
+        $users = User::paginate(10);
+        foreach($users as $user){
+            $userRoles = [];
+            $amount_roles = count($user->roles);
+            $counter = 1;
+            //Get all Roles for each User
+            foreach($user->roles as $role){
+                if($amount_roles == $counter){
+                    //Last item
+                    array_push($userRoles,$role->name);
+                }else{
+                    array_push($userRoles,$role->name.',');
+                }
+                $counter++;
+            }
+            array_push($roles,$userRoles);
+        }
         return view('admin.user_management.users.index',[
-            'users' => User::paginate(10)
+            'roles' => $roles,
+            'users' => $users
         ]);
     }
 

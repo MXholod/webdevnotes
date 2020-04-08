@@ -21,12 +21,16 @@
                     <thead>
                         <th>Имя пользователя</th>
                         <th>Email пользователя</th>
-                        <th class="text-right">Действие</th>
+                        <th class="text-right" colspan="2">Действие</th>
                     </thead>
                     <tbody>
+                                    @php $i = 0; @endphp
                         @forelse($users as $user)
                             <tr>
-                                <td>{{ $user->login }}</td>
+                                <td>{{ $user->login }}
+                                    (@foreach($roles[$i] as $role)<span>{{ $role }}</span>@endforeach)
+                                    @php $i++; @endphp
+                                </td>
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     <form style="display:inline-block;"
@@ -44,6 +48,8 @@
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
+                                </td>
+                                <td>
                                     <a href="{{route('admin.user_management.user.edit', $user)}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -51,7 +57,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">
+                                <td colspan="4" class="text-center">
                                     <h2>Пользователи отсутствуют</h2>
                                 </td>
                             </tr>
@@ -59,7 +65,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3" class="text-center">
+                            <td colspan="4" class="text-center">
                                 <ul class="pagination pull-right">
                                     <li>{{$users->links()}}</li>
                                 </ul>
