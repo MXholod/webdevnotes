@@ -24,7 +24,7 @@ class RedirectIfAuthenticated
             }
             else{
             //Go to the User's Cabinet Page
-                return $next('/cabinet');
+                return redirect('/cabinet');
             }
             //return redirect('/home');
         }
