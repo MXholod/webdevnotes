@@ -22,7 +22,8 @@
                         <th>Наименование</th>
                         <th>Описание Статьи</th>
                         <th>Публикация</th>
-                        <th class="text-right">Действие</th>
+                        <th>Удалить</th>
+                        <th class="text-right">Редактировать</th>
                     </thead>
                     <tbody>
                         @forelse($posts as $post)
@@ -31,6 +32,7 @@
                                 <td>{!! $post->description ?? "Описание отсутствует" !!}</td>
                                 <td>{{ $post->published }}</td>
                                 <td>
+                                    @can('delete',$post)
                                     <form style="display:inline-block;"
                                         onsubmit="if(confirm('Want to delete?')){
                                             return true;
@@ -46,6 +48,9 @@
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
+                                   @endcan
+                                </td>
+                                <td style="padding-left:60px;">
                                     <a href="{{route('admin.post.edit', $post)}}">
                                         <i class="fa fa-edit"></i>
                                         {{ $post->published }}
@@ -54,7 +59,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center">
+                                <td colspan="5" class="text-center">
                                     <h2>Статьи отсутствуют</h2>
                                 </td>
                             </tr>
@@ -62,7 +67,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="4" class="text-center">
+                            <td colspan="5" class="text-center">
                                 <ul class="pagination pull-right">
                                     <li>{{$posts->links()}}</li>
                                 </ul>

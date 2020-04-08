@@ -5,6 +5,8 @@ namespace Webdev\Providers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Webdev\Models\BlogwdCategory;
+use Webdev\Models\BlogwdPost;
+use Webdev\Policies\BlogwdPostPolicy;
 use Webdev\Policies\BlogwdCategoryPolicy;
 
 class AuthServiceProvider extends ServiceProvider
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         //'Webdev\Model' => 'Webdev\Policies\ModelPolicy',
         BlogwdCategory::class => BlogwdCategoryPolicy::class,
+        BlogwdPost::class => BlogwdPostPolicy::class,
     ];
 
     /**
