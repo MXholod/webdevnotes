@@ -164,7 +164,7 @@ return [
          * Our own packages
          */
         //For Ckeditor
-        Unisharp\Ckeditor\ServiceProvider::class,
+        //Unisharp\Ckeditor\ServiceProvider::class,
         //For Top Menu
         Webdev\Providers\BlogwdServiceProvider::class
     ],
