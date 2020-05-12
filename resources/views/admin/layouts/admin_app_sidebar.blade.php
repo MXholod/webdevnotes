@@ -1,5 +1,5 @@
 <aside>
-    <button id="sideBarMenuManage">Меню 
+    <button id="sideBarMenuManage">Меню
         <i class="far fa-caret-square-right fac-rule"></i>
     </button>
     <nav class="navbar navbar-light bg-light">
@@ -10,21 +10,17 @@
             <li class="nav-item">
               <a class="nav-link" href="{{route('admin.post.index')}}">Материалы</a>
             </li>
+            @can('IS_ADMIN')
             <li class="nav-item">
               <a class="nav-link" href="{{route('admin.user_management.user.index')}}">Управление пользователями</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('admin.static-page.index')}}">Статические страницы</a>
+                <a class="nav-link" href="{{route('admin.static-page.index')}}">Статические страницы</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{route('admin.error-page.index')}}">Страницы ошибок</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
+            @endcan
         </ul>
-    </nav>    
+    </nav>
 </aside>
