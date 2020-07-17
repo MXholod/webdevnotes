@@ -1,7 +1,11 @@
 <div>
-    <ul>
+    <ul class="navbar-nav">
         @foreach($staticPages as $staticPage)
-            <li><a href="{{$staticPage->path}}">{{ $staticPage->title }}</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{$staticPage->path}}">
+                    {{ $staticPage->title }}
+                </a>
+            </li>
         @endforeach
     </ul>
 </div>
