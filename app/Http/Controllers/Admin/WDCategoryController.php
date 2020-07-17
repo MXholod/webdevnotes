@@ -22,7 +22,7 @@ class WDCategoryController extends WDBlogBaseController
             //Five Categories per page
         //    'categories' => BlogwdCategory::paginate(5)
         //]);
-        return view('admin.categories.index',[
+        return response()->view('admin.categories.index',[
             'categories' => BlogwdCategory::paginate(5)
         ]);
     }
@@ -38,10 +38,10 @@ class WDCategoryController extends WDBlogBaseController
         $filesCss = $this->getAllFiles("css/additional_css");
         //We've got the whole list of JS file paths
         $files = $this->getAllFiles("js/additional_js");
-        //Model name    
+        //Model name
         $model = "Webdev\Models\BlogwdCategory";
         //Отвечает за открытие формы создания Категории
-        return view('admin.categories.create',[
+        return response()->view('admin.categories.create',[
             'firstFiles'=>$this->prepareFilesBeforeCreate($files,0,$model),
             'firstScripts'=>array(),
             'firstCssFiles'=>$this->prepareFilesBeforeCreate($filesCss,0,$model),
@@ -61,7 +61,7 @@ class WDCategoryController extends WDBlogBaseController
     public function store(Request $request)
     {
         //Отвечает за создание записи в таблице
-        //Model name    
+        //Model name
         $model = "Webdev\Models\BlogwdCategory";
         $category = BlogwdCategory::create($request->all());
         //Get current resource ID from '$post->id'. It is needed for 'blogwd_scripts' table
@@ -105,11 +105,11 @@ class WDCategoryController extends WDBlogBaseController
         $files = $this->getAllFiles("js/additional_js");
         //We've got the whole list of file paths
         $filesCss = $this->getAllFiles("css/additional_css");
-        //Model name    
+        //Model name
         $model = "Webdev\Models\BlogwdCategory";
         $category = BlogwdCategory::find($id);
         //Отвечает за открытие формы обновления
-        return view('admin.categories.edit',[
+        return response()->view('admin.categories.edit',[
             // ’files’ и  'activeScripts' – данные для Vue компонентов
             'files'=>$this->getUnlikeDBPaths($files,$category->scripts,$id,$model),
             'activeScripts'=>$this->getDbPreparedData($category->scripts),
@@ -139,6 +139,7 @@ class WDCategoryController extends WDBlogBaseController
             $category->title = $request->get('title');
             $category->meta_keywords = $request->get('meta_k');
             $category->meta_description = $request->get('meta_d');
+            $category->menu_label = $request->get('menu_label');
             $category->description = $request->get('description');
             $category->parent_id = $request->get('parent_id');
         $category->save();

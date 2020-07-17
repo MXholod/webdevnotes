@@ -10,7 +10,12 @@
             <li class="main-left-navbar__sub-level-present">
         @endif
             <div>
-                <span><i class="fab fa-html5"></i></span>
+                <!--<span><i class="fab fa-html5"></i></span>-->
+                @if (isset($category['menu_label']))
+                    <span><i class="{{$category['menu_label'] }}"></i></span>
+                @else
+                    <span></span>
+                @endif
                 <span data-level="{{$countMenu}}" data-order="{{$order}}">
                     <a href="{{url("/category/$category[slug]")}}">{{$category['title']}}</a>
                 </span>
@@ -27,12 +32,16 @@
             <li class="main-left-navbar__sub-level-absent">
         @endif
             <div>
-                <span><i class="fab fa-html5"></i></span>
-                <span data-level="{{$countMenu}}" data-order="{{$order}}">
-                    <a href="{{url("/category/$category[slug]")}}">{{$category['title']}}</a>
-                </span>
-            </div>
-    @endif
-            </li>
-    @php $order++; @endphp
- @endforeach
+            @if (isset($category['menu_label']))
+                <span><i class="{{$category['menu_label'] }}"></i></span>
+            @else
+                 <span></span>
+            @endif
+            <span data-level="{{$countMenu}}" data-order="{{$order}}">
+                <a href="{{url("/category/$category[slug]")}}">{{$category['title']}}</a>
+            </span>
+        </div>
+@endif
+        </li>
+@php $order++; @endphp
+@endforeach

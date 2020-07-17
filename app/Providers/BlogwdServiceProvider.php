@@ -53,6 +53,7 @@ class BlogwdServiceProvider extends ServiceProvider
                 $child_arr['parent_id'] = $value->parent_id;
                 $child_arr['title'] = $value->title;
                 $child_arr['slug'] = $value->slug;
+                $child_arr['menu_label'] = $value->menu_label;
             $parents_arr[$value->parent_id][$value->id] = $child_arr;
         }
         //First parent array
@@ -81,9 +82,9 @@ class BlogwdServiceProvider extends ServiceProvider
     /*public function staticPages(){
         //Facade View
         View::composer('layouts.static_pages_menu', function($view){
-            
+
             $only_published = \Webdev\Models\BlogwdStaticPage::isPublished()->get();
-            
+
             $view->with('staticPages',$only_published);//$prepare_categories $menu_categories
         });
     }*/
