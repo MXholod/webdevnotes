@@ -11,6 +11,8 @@
     },
     "devDependencies": {
         "ajv": "^6.10.2",
+        "browser-sync": "^2.26.10",
+        "browser-sync-webpack-plugin": "^2.0.1",
         "cross-env": "^6.0.3",
         "imagemin": "^7.0.1",
         "laravel-mix": "^5.0.1",
