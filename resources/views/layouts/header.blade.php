@@ -53,8 +53,8 @@
     </label>
     @php $countMenu = 0; @endphp
     <div class="main-left-navbar__sidebar">
-        <header>Мої сім’я Hello</header>
-        <ul data-simplebar-direction='rtl'>
+        <header>Карта IT города</header><!--Мої сім’я Hello-->
+        <ul class="main-left-navbar__main-ul" data-simplebar-direction='rtl'>
             @include('layouts.top_menu',['categories' => $categories])
         </ul>
     </div>

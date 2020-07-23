@@ -23,5 +23,12 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 //Main Top Menu Navbar
 $mainMenuTop--header-height:60px;/*Top menu height and Left menu top offset*/
 //Main Left Menu Navbar
+$before-exsm-item-height:0;
+$exsm-item-height:0;
+$sm-item-height:0;
+$md-item-height:0;
+$lg-item-height:0;
+$exlg-item-height:39px;
 $mainMenuLeft--header-top-offset:50px;
 $bg-left-menu: rgba(242, 200, 82, 1);
+//End of Main Left Menu Navbar
