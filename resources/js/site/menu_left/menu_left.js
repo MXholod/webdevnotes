@@ -139,4 +139,53 @@ $(document).ready(function(){
         //Expand nested menu items
         $(topParentLI).animate({height: height+'px'});
     }
+    /*
+    Top and Left Menus slide up and down together
+    */
+    //Get Top Menu sandwich button
+    const sandwichBtn = document.getElementById("horizontal-menu-btn");
+        sandwichBtn.addEventListener('click',moveBothConditionally,false);
+    //Slide both Menus Up and Down using flag
+    let upOrDown = false;
+    //Get top navbar menu height 60px;
+    const topNavbarHeight = window.getComputedStyle(sandwichBtn.parentNode,null)
+        .getPropertyValue("height");
+    //Call this function by click each time
+    function moveBothConditionally(){
+        let btn = this;
+        if(!upOrDown){
+            bothDown(btn);
+        }else{
+             bothUp(btn);
+        }
+    }
+    //Go down
+    function bothDown(btn){
+        //Change flag to true
+        upOrDown = true;
+        //Set 'auto' to resize height
+        btn.parentNode.style.height = "auto";
+        //Get left menu
+        const leftMenu = document.querySelector(".main-left-navbar");
+        setTimeout(()=>{
+            //Inner Navbar content
+            //const contentMenu = document.getElementById("navbarSupportedContent");
+            const topMenu = document.querySelector(".main-top-navbar");
+            //Inner Navbar content height
+            let contentMenuHeight = window.getComputedStyle(topMenu,null)
+                .getPropertyValue("height");
+            //let fullHeight = parseInt(contentMenuHeight) + parseInt(topNavbarHeight) - 5;
+            $(leftMenu).animate({top: contentMenuHeight});
+        },700);
+    }
+    //Go up
+    function bothUp(btn){
+        //Change flag to default
+        upOrDown = false;
+        //
+        const leftMenu = document.querySelector(".main-left-navbar");
+        //Left menu lift up
+        $(leftMenu).animate({top: parseInt(topNavbarHeight)});
+        $(btn.parentNode).animate({height: parseInt(topNavbarHeight)});
+    }
 });
