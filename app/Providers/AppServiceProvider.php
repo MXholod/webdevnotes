@@ -4,6 +4,7 @@ namespace Webdev\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        //Disable Laravel-Debugbar 
+        //To display the correct paginator we must call this method. Laravel >= 8.0
+        Paginator::useBootstrap();
+        //Disable Laravel-Debugbar
         //\Debugbar::disable();
         //
     }
