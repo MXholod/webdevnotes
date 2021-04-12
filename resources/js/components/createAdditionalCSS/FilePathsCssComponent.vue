@@ -5,7 +5,7 @@
         </div>
         <div class="card-body overflow-auto accept_replace">
             <ul class="paths-list">
-                <li v-for="(file,index) in incomingData" 
+                <li v-for="(file,index) in incomingData"
                     :key="index"
                     ref="liItem"
                     class="paths-list__item"
@@ -14,7 +14,7 @@
                     <span>{{file.path}}</span>
                     <span class="paths-list__arrow"
                           @click="toPathDBs(index)"
-                    > 
+                    >
                         <i class="fas fa-caret-square-right paths-list__arrow-icon"></i>
                     </span>
                 </li>
@@ -34,7 +34,7 @@
     </div>
 </template>
 <script>
-import { EventEmitterCreateCss } from "../../app.js";
+import { EventEmitterCreateCss } from "../../app_main_admin.js";
 export default {
     props:["files"],
     data() {
@@ -85,9 +85,9 @@ export default {
             //Pull out and delete a current element from the array
             let transferObj = this.incomingData.splice(this.currentIndex,1);
                 //Prepare array data to transfer
-                this.dataPreparedFiles.model_id = transferObj[0].model_id; 
-                this.dataPreparedFiles.model = transferObj[0].model; 
-                this.dataPreparedFiles.path = transferObj[0].path; 
+                this.dataPreparedFiles.model_id = transferObj[0].model_id;
+                this.dataPreparedFiles.model = transferObj[0].model;
+                this.dataPreparedFiles.path = transferObj[0].path;
                 this.dataPreparedFiles.highlited = transferObj[0].highlited;
                 this.dataPreparedFiles.id = transferObj[0].id;
                 this.dataPreparedFiles.panelHidden = transferObj[0].panelHidden;
@@ -109,7 +109,7 @@ export default {
     computed:{
         setHeightDialogBox(){
             let paddingTop = (this.incomingData.length * 5);
-            let all; 
+            let all;
                 if(this.incomingData.length <= 2){
                     all = (2 * this.liHeight) + paddingTop + this.liHeight;
                 }else{
@@ -145,7 +145,7 @@ export default {
         if(this.files.length > 0){
             //Get value from CSS when app was loaded first time;
             let cssPropLiHeight = window.getComputedStyle(this.$refs.liItem[0],null).getPropertyValue("height");
-            this.liHeight = parseInt(cssPropLiHeight); 
+            this.liHeight = parseInt(cssPropLiHeight);
         }
     }
 }
@@ -205,7 +205,7 @@ export default {
         background-color:rgba(255,255,255,1);
     }
     .accept_replace__navigation{
-        margin:20px; 
+        margin:20px;
         @mixin buttons(){
             display:inline-block;
             height:25px;
@@ -234,9 +234,9 @@ export default {
 }
 /* Extra Small devices (phones, 480px and up)*/
 @media only screen and (min-width: 480px) {
-    .card-header{font-size: 13px;} 
+    .card-header{font-size: 13px;}
     .paths-list{
-        
+
         .paths-list__item{
             font-size:14px;
             border:1px solid #000;
@@ -264,7 +264,7 @@ export default {
             font-size:14px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 height:25px;
@@ -284,7 +284,7 @@ export default {
 @media only screen and (min-width: 576px) {
     .card-header{font-size: 13px;}
     .paths-list{
-        
+
         .paths-list__item{
             font-size:15px;
             border:1px solid #000;
@@ -312,7 +312,7 @@ export default {
             font-size:15px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 height:30px;
@@ -332,7 +332,7 @@ export default {
 @media only screen and (min-width: 768px) {
     .card-header{font-size: 13px;}
     .paths-list{
-        
+
         .paths-list__item{
             font-size:14px;
             border:1px solid #000;
@@ -361,7 +361,7 @@ export default {
             font-size:14px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 height:26px;
@@ -381,7 +381,7 @@ export default {
 @media only screen and (min-width: 992px) {
     .card-header{font-size: 14px;}
     .paths-list{
-        
+
         .paths-list__item{
             font-size:16px;
             border:1px solid #000;
@@ -411,7 +411,7 @@ export default {
             font-size:16px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 width:60px;
@@ -432,7 +432,7 @@ export default {
 @media only screen and (min-width: 1200px) {
     .card-header{font-size: 15px;}
     .paths-list{
-        
+
         .paths-list__item{
             font-size:16px;
             border:1px solid #000;
@@ -461,7 +461,7 @@ export default {
             font-size:16px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 width:60px;

@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @include('admin.layouts.admin_app_head')
 <body>
-    <div class="wd-admin-wrapper" id="app">
+    <div class="wd-admin-wrapper" id="app_main_admin">
         <div class="container wd-admin-all_content">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 wd-admin-header">

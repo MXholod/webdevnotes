@@ -1,11 +1,11 @@
 <template>
-    <div class="card card-default float-left col-sm-12 col-md-6 col-lg-6 col-xl-6" style="height:200px;background-color: rgba(0,0,255,0.1);"> 
+    <div class="card card-default float-left col-sm-12 col-md-6 col-lg-6 col-xl-6" style="height:200px;background-color: rgba(0,0,255,0.1);">
         <div class="card-header text-center">
             Стили для этого ресурса
         </div>
         <div class="card-body overflow-auto accept_replace">
             <ul class="paths-list">
-                <li v-for="(dataItem,index) in incomingData" 
+                <li v-for="(dataItem,index) in incomingData"
                     :key="dataItem.id"
                     ref="liItem"
                     class="paths-list__item"
@@ -13,7 +13,7 @@
                 >
                     <span class="paths-list__arrow"
                           @click="toPathFiles(index)"
-                    > 
+                    >
                         <i class="fas fa-caret-square-left paths-list__arrow-icon"></i>
                     </span>
                     <span class="paths-list__text">{{dataItem.path_css}}</span>
@@ -35,13 +35,13 @@
     </div>
 </template>
 <script>
-import { EventEmitterCss } from "../../app.js";
+import { EventEmitterCss } from "../../app_main_admin.js";
 import route from './../../routesExtractFromJson';
 export default {
     props:["dbpaths"],
     data(){
         return {
-            incomingData:[],//Incoming data 
+            incomingData:[],//Incoming data
             currentIndex:0,
             highlightedItem:{current:undefined,old:undefined},//Index for highlighted item
             showDialogBox:true,//Show hide dialog box
@@ -83,9 +83,9 @@ export default {
             this.showDialogBox = true;
              //Delete current elementfrom from the array and then get it
             let transferObj = this.incomingData.splice(this.currentIndex,1);
-                this.dataPreparedFiles.model_id = transferObj[0].styleable_id; 
-                this.dataPreparedFiles.model = transferObj[0].styleable_type; 
-                this.dataPreparedFiles.path = transferObj[0].path_css; 
+                this.dataPreparedFiles.model_id = transferObj[0].styleable_id;
+                this.dataPreparedFiles.model = transferObj[0].styleable_type;
+                this.dataPreparedFiles.path = transferObj[0].path_css;
                 this.dataPreparedFiles.highlited = transferObj[0].highlited;
                 this.dataPreparedFiles.panelHidden = transferObj[0].panelHidden;
             //Save Vue context
@@ -126,7 +126,7 @@ export default {
     computed:{
         setHeightDialogBox(){
             let paddingTop = (this.incomingData.length * 5);
-            let all; 
+            let all;
                 if(this.incomingData.length <= 2){
                     all = (2 * this.liHeight) + paddingTop + this.liHeight;
                 }else{
@@ -272,7 +272,7 @@ export default {
         background-color:rgba(255,255,255,1);
     }
     .accept_replace__navigation{
-        margin:20px; 
+        margin:20px;
         @mixin buttons(){
             display:inline-block;
             height:25px;
@@ -353,7 +353,7 @@ export default {
                 }
             }
         }
-    } 
+    }
     .accept_replace__block{
         z-index:3;
         top:0px;
@@ -363,7 +363,7 @@ export default {
             font-size:14px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 height:25px;
@@ -434,7 +434,7 @@ export default {
                 }
             }
         }
-    } 
+    }
     .accept_replace__block{
         z-index:3;
         top:0px;
@@ -444,7 +444,7 @@ export default {
             font-size:15px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 height:30px;
@@ -515,7 +515,7 @@ export default {
                 }
             }
         }
-    } 
+    }
     .accept_replace__block{
         z-index:3;
         top:0px;
@@ -525,7 +525,7 @@ export default {
             font-size:14px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 height:26px;
@@ -597,7 +597,7 @@ export default {
                 }
             }
         }
-    } 
+    }
     .accept_replace__block{
         z-index:3;
         top:0px;
@@ -607,7 +607,7 @@ export default {
             font-size:16px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 height:30px;
@@ -628,7 +628,7 @@ export default {
 @media only screen and (min-width: 1200px) {
     .card-header{font-size: 15px;}
     .paths-list{
-        
+
         .paths-list__item{
             font-size:16px;
             border:1px solid #000;
@@ -700,7 +700,7 @@ export default {
             font-size:16px;
         }
         .accept_replace__navigation{
-            margin:20px; 
+            margin:20px;
             @mixin buttons(){
                 display:inline-block;
                 width:60px;
