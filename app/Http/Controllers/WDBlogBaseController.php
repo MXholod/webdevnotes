@@ -4,6 +4,7 @@ namespace Webdev\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 
 class WDBlogBaseController extends Controller
 {
@@ -22,9 +23,20 @@ class WDBlogBaseController extends Controller
         //Get data from DB for page according to the URN
         $pathWithSlash = "/".$pathIsCleared;
         //Get data from DB for page according to the URN
-        //$pageData = DB::table('blogwd_static_pages')->where('path', $pathIsCleared)->orWhere('path',$pathWithSlash)->first();
-        $pageData = \Webdev\Models\BlogwdStaticPage::where('path', $pathIsCleared)->orWhere('path',$pathWithSlash)->first();
-        //Return data for static page
-        return $pageData; 
+        try {
+            //$pageData = DB::table('blogwd_static_pages')->where('path', $pathIsCleared)->orWhere('path',$pathWithSlash)->first();
+            $pageData = \Webdev\Models\BlogwdStaticPage::where('path', $pathIsCleared)->orWhere('path', $pathWithSlash)->first();
+            //Return data for static page
+            return $pageData;
+        }catch(QueryException $e){
+            if($e) {//->errorInfo[1] == 2002
+                echo 'Something went wrong';
+                dd();
+            } else {
+                throw $e;
+            }
+        }
+
+
     }
 }
