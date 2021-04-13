@@ -19,7 +19,7 @@ window.axios = require('axios');
  * for importing EcmaScript modules, you'll need to append .default, like so:
  * require('./components/ExampleComponent.vue').default
  **/
-
+/*
 export const EventEmitter = new Vue();
 export const EventEmitterCreate = new Vue();
 export const EventEmitterCss = new Vue();
@@ -29,7 +29,8 @@ Vue.component('aditional-js-component', require('./components/additionalJS/Aditi
 Vue.component('create-aditional-js-component', require('./components/createAdditionalJS/AditionalJsComponent.vue').default);
 Vue.component('additional-css-component', require('./components/additionalCSS/AdditionalCssComponent.vue').default);
 Vue.component('create-additional-css-component', require('./components/createAdditionalCSS/AdditionalCssComponent.vue').default);
+*/
 
-const app = new Vue({
-    el: '#app'
-});
+/*const app = new Vue({
+    el: '#app_main_site'
+});*/
