@@ -16,7 +16,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/site/app_site.js') }}" defer></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app_main_site.js') }}" defer></script>
     @stack('scripts_header')
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -32,7 +32,7 @@
     @stack('styles_header')
 </head>
 <body>
-    <div id="app">
+    <div id="app_main_site">
         @include('layouts.header')
         <main class="py-4">
             @yield('content')
