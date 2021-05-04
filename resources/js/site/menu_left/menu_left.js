@@ -83,7 +83,8 @@ $(document).ready(function(){
                 let ULs = parentLiClicked.getElementsByTagName("UL");
                 //Top level LI elements
                 if (level === 1) {
-                    let span = parentLiClicked.firstChild.lastChild;
+                    //let span = parentLiClicked.firstChild.lastChild;
+                    let span = correctNodeType(parentLiClicked);
                     let activeClass = getActiveOrder(order);
                     span.classList.add(activeClass);
                     if(ULs[0]){
@@ -101,7 +102,8 @@ $(document).ready(function(){
                     let LIs = ulWhereClicked.getElementsByTagName("LI");
                     //
                     for (let i = 0; i < LIs.length; i++) {
-                        let span = LIs[i].firstChild.lastChild;
+                        //let span = LIs[i].firstChild.lastChild;
+                        let span = correctNodeType(LIs[i]);
                         //Find link and add the CSS class
                         if (+span.dataset.level === level && +span.dataset.order === order) {
                             let activeClass = getActiveOrder(order);
@@ -112,6 +114,15 @@ $(document).ready(function(){
             }
         }
     })();
+    //It checks node type of an element
+    function correctNodeType(currentElement) {
+        if(currentElement.nodeType !== 1) return;
+        if(currentElement.children[0].lastChild.nodeType !== 1){
+            return currentElement.children[0].lastChild.previousSibling;
+        }else{
+            return currentElement.children[0].lastChild;
+        }
+    }
     //Get correct item from an 'order' sessionStorage property. Return class with correct active number
     function getActiveOrder(currentOrder){
         const orderLimit = 5;//Amount of all items on the image sprite
@@ -127,7 +138,12 @@ $(document).ready(function(){
     //Expand Menu items, motion - false = animate height, true = fixed height
     function slideDown(topParentLI,parentUL){
         //Get DIV before UL
-        let div = parentUL.parentNode.firstChild;
+        let div;
+        if(parentUL.parentNode.children[0].nodeType !== 1){
+            div = parentUL.parentNode.children[0].nextElementSibling;
+        }else{
+            div = parentUL.parentNode.children[0];
+        }
         //Get height of DIV before
         let divClickedHeight = window.getComputedStyle(div,null)
             .getPropertyValue("height");
